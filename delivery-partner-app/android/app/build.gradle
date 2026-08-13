@@ -1,0 +1,127 @@
+    plugins {
+        id "com.android.application"
+        id "kotlin-android"
+        // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+        id "dev.flutter.flutter-gradle-plugin"
+        id "com.google.gms.google-services"
+        id "com.google.firebase.crashlytics"
+    }
+
+    def localProperties = new Properties()
+    def localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.withReader("UTF-8") { reader ->
+            localProperties.load(reader)
+        }
+    }
+
+
+    def keystoreProperties = new Properties()
+    def keystorePropertiesFile = rootProject.file("key.properties")
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.withReader("UTF-8") { reader ->
+            keystoreProperties.load(reader)
+        }
+    }
+
+    def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+    if (flutterVersionCode == null) {
+        flutterVersionCode = "1"
+    }
+
+    def flutterVersionName = localProperties.getProperty("flutter.versionName")
+    if (flutterVersionName == null) {
+        flutterVersionName = "1.0"
+    }
+
+    android {
+        namespace = "com.zenfoo.partner"
+        compileSdk = 36
+        ndkVersion = "27.0.12077973"
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_17
+            targetCompatibility JavaVersion.VERSION_17
+            coreLibraryDesugaringEnabled true
+        }   
+
+        kotlinOptions {
+            jvmTarget = '17'
+        }
+
+        defaultConfig {
+            // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+            applicationId = "com.zenfoo.partner"
+            // You can update the following values to match your application needs.
+            // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+            minSdkVersion flutter.minSdkVersion
+            targetSdk = flutter.targetSdkVersion
+            versionCode = flutterVersionCode.toInteger()
+            versionName = flutterVersionName
+            multiDexEnabled true
+        }
+
+        signingConfigs {
+            release {
+                keyAlias keystoreProperties['keyAlias']
+                keyPassword keystoreProperties['keyPassword']
+                storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+                storePassword keystoreProperties['storePassword']
+            }
+        }
+
+        buildTypes {
+            debug {
+                // Allow larger method counts due to google_navigation_flutter
+                debuggable true
+            }
+            release {
+                signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
+                shrinkResources false
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        // Handle duplicate classes from google_navigation_flutter and google_maps_flutter
+        packagingOptions {
+            pickFirst 'lib/arm64-v8a/libc++_shared.so'
+            pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+            pickFirst 'lib/x86/libc++_shared.so'
+            pickFirst 'lib/x86_64/libc++_shared.so'
+            pickFirst 'lib/arm64-v8a/libmaps.so'
+            pickFirst 'lib/armeabi-v7a/libmaps.so'
+            pickFirst 'lib/x86/libmaps.so'
+            pickFirst 'lib/x86_64/libmaps.so'
+            exclude 'META-INF/com/google/android/gms/version.xml'
+        }
+    }
+
+    flutter {
+        source = "../.."
+    }
+
+    // Disable duplicate class checks since google_navigation_flutter bundles Maps SDK
+    tasks.whenTaskAdded { task ->
+        if (task.name == 'checkDebugDuplicateClasses' || task.name == 'checkReleaseDuplicateClasses') {
+            task.enabled = false
+        }
+    }
+
+
+    dependencies {
+        coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.4'
+
+        // Import the Firebase BoM
+        implementation platform('com.google.firebase:firebase-bom:33.7.0')
+
+        // Firebase services (versions managed by BoM)
+        implementation 'com.google.firebase:firebase-analytics'
+        implementation 'com.google.firebase:firebase-crashlytics'
+        implementation 'com.google.firebase:firebase-database'
+    }
+
+    // Exclude play-services-maps since google_navigation_flutter bundles Maps SDK
+    configurations.all {
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }

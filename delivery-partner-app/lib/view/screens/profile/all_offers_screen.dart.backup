@@ -1,0 +1,830 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:zenfoo_partner/models/incentive_offer_model.dart';
+import 'package:zenfoo_partner/providers/incentive_provider.dart';
+import 'package:zenfoo_partner/services/status.dart';
+import 'package:zenfoo_partner/theme/app_color_scheme.dart';
+import 'package:zenfoo_partner/theme/theme_provider.dart';
+import 'package:zenfoo_partner/utils/appHeader.dart';
+import 'package:zenfoo_partner/view/custom_widgets/custom_scaffold.dart';
+import 'package:zenfoo_partner/view/screens/home/screens/offer_detail_screen.dart';
+import 'package:intl/intl.dart';
+
+class AllOffersScreen extends StatefulWidget {
+  const AllOffersScreen({super.key});
+
+  @override
+  State<AllOffersScreen> createState() => _AllOffersScreenState();
+}
+
+class _AllOffersScreenState extends State<AllOffersScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _shimmerController;
+  late Animation<double> _shimmerAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize shimmer animation
+    _shimmerController = AnimationController(
+      duration: const Duration(milliseconds: 1500),
+      vsync: this,
+    )..repeat();
+    _shimmerAnimation = Tween<double>(begin: -1.0, end: 2.0).animate(
+      CurvedAnimation(parent: _shimmerController, curve: Curves.easeInOut),
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<IncentiveProvider>().getAllOffersGrouped();
+    });
+  }
+
+  @override
+  void dispose() {
+    _shimmerController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    final colorScheme = themeProvider.colorScheme;
+    final incentiveProvider = context.watch<IncentiveProvider>();
+
+    return CustomScaffold(
+      backgroundColor: colorScheme.background,
+      body: Column(
+        children: [
+          // Header
+          const AppHeader(
+            label: "OFFERS",
+            title: "Your Offers",
+            showBackButton: true,
+            showExitButton: false,
+          ),
+
+          // Body
+          Expanded(
+            child: _buildBody(colorScheme, incentiveProvider),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody(AppColorScheme colorScheme, IncentiveProvider provider) {
+    if (provider.groupedOffersStatus == ApiStatus.loading) {
+      return _buildShimmerLoading(colorScheme);
+    }
+
+    if (provider.groupedOffersStatus == ApiStatus.error) {
+      return _buildErrorState(
+          colorScheme, provider.groupedOffersError.isNotEmpty
+              ? provider.groupedOffersError
+              : 'Failed to load offers');
+    }
+
+    // Use offers already grouped by the API
+    final activeOffers = provider.groupedActiveOffers;
+    final upcomingOffers = provider.groupedUpcomingOffers;
+    final expiredOffers = provider.groupedExpiredOffers;
+
+    final hasActiveOffers = activeOffers.isNotEmpty;
+    final hasUpcomingOffers = upcomingOffers.isNotEmpty;
+    final hasExpiredOffers = expiredOffers.isNotEmpty;
+
+    if (!hasActiveOffers && !hasUpcomingOffers && !hasExpiredOffers) {
+      return _buildEmptyState(colorScheme);
+    }
+
+    return RefreshIndicator(
+      color: colorScheme.primary,
+      backgroundColor: colorScheme.cardBackground,
+      onRefresh: () => provider.getAllOffersGrouped(),
+      child: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        children: [
+          const SizedBox(height: 20),
+
+          // Active Offers Section
+          if (hasActiveOffers) ...[
+            _buildSectionHeader(
+                colorScheme, 'Active Offers', activeOffers.length),
+            const SizedBox(height: 12),
+            ...activeOffers
+                .map((offer) => _buildOfferCard(colorScheme, offer, 'active')),
+            const SizedBox(height: 24),
+          ],
+
+          // Upcoming Offers Section
+          if (hasUpcomingOffers) ...[
+            _buildSectionHeader(
+                colorScheme, 'Upcoming Offers', upcomingOffers.length),
+            const SizedBox(height: 12),
+            ...upcomingOffers.map(
+                (offer) => _buildOfferCard(colorScheme, offer, 'upcoming')),
+            const SizedBox(height: 24),
+          ],
+
+          // Expired Offers Section
+          if (hasExpiredOffers) ...[
+            _buildSectionHeader(
+                colorScheme, 'Expired Offers', expiredOffers.length),
+            const SizedBox(height: 12),
+            ...expiredOffers
+                .map((offer) => _buildOfferCard(colorScheme, offer, 'expired')),
+            const SizedBox(height: 24),
+          ],
+
+          const SizedBox(height: 32),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionHeader(
+      AppColorScheme colorScheme, String title, int count) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          style: GoogleFonts.inter(
+            color: colorScheme.textPrimary,
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            letterSpacing: -0.3,
+            height: 1.4,
+          ),
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: colorScheme.primary.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Text(
+            count.toString(),
+            style: GoogleFonts.inter(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
+              letterSpacing: -0.15,
+              height: 1.4,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildOfferCard(
+      AppColorScheme colorScheme, IncentiveOffer offer, String type) {
+    final isActive = type == 'active';
+    final isExpired = type == 'expired';
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.all(16),
+      decoration: ShapeDecoration(
+        color: colorScheme.cardBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        shadows: colorScheme.cardShadow,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date badge and Live indicator row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildDateBadge(colorScheme, offer.startDate),
+              if (isActive) _buildLiveIndicator(colorScheme),
+            ],
+          ),
+
+          const SizedBox(height: 12),
+
+          // Offer name
+          Text(
+            offer.name,
+            style: GoogleFonts.inter(
+              color: colorScheme.textPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.4,
+              height: 1.35,
+            ),
+          ),
+
+          const SizedBox(height: 8),
+
+          // Time slot
+          Row(
+            children: [
+              Icon(
+                Icons.access_time,
+                size: 16,
+                color: colorScheme.textSecondary,
+              ),
+              const SizedBox(width: 6),
+              Text(
+                _formatTimeSlot(offer.startDate, offer.endDate),
+                style: GoogleFonts.inter(
+                  color: colorScheme.textSecondary,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: -0.2,
+                  height: 1.5,
+                ),
+              ),
+            ],
+          ),
+
+          const SizedBox(height: 16),
+
+          // Divider
+          Container(
+            height: 1,
+            color: colorScheme.border.withValues(alpha: 0.3),
+          ),
+
+          const SizedBox(height: 16),
+
+          // Incentive tiers section
+          if (isActive) ...[
+            _buildIncentiveTiers(colorScheme, offer),
+            const SizedBox(height: 16),
+          ],
+
+          // For upcoming offers, show days until start
+          if (type == 'upcoming') ...[
+            _buildUpcomingInfo(colorScheme, offer),
+            const SizedBox(height: 16),
+          ],
+
+          // For expired offers, show completion info
+          if (isExpired) ...[
+            _buildExpiredInfo(colorScheme, offer),
+            const SizedBox(height: 16),
+          ],
+
+          // View Details button
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => OfferDetailsScreen(
+                    offerId: offer.offerId,
+                  ),
+                ),
+              );
+            },
+            child: Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: colorScheme.buttonShadow,
+              ),
+              child: Center(
+                child: Text(
+                  'View Details',
+                  style: GoogleFonts.inter(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    letterSpacing: -0.25,
+                    height: 1.5,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDateBadge(AppColorScheme colorScheme, DateTime date) {
+    final day = date.day.toString().padLeft(2, '0');
+    final month = DateFormat('MMM').format(date).toUpperCase();
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: colorScheme.primary.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            day,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+              color: colorScheme.primary,
+              letterSpacing: -0.2,
+              height: 1.4,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Text(
+            month,
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: colorScheme.primary,
+              letterSpacing: -0.2,
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLiveIndicator(AppColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: colorScheme.error.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(
+              color: colorScheme.error,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            'LIVE',
+            style: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: colorScheme.error,
+              letterSpacing: 0.5,
+              height: 1.4,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _formatTimeSlot(DateTime startDate, DateTime endDate) {
+    final start = DateFormat('h a').format(startDate);
+    final end = DateFormat('h a').format(endDate);
+    return '$start to $end';
+  }
+
+  Widget _buildIncentiveTiers(
+      AppColorScheme colorScheme, IncentiveOffer offer) {
+    final tiers = offer.tiers;
+    if (tiers.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Incentive amount badges
+        Wrap(
+          spacing: 8,
+          runSpacing: 8,
+          children: tiers.map((tier) {
+            final isAchieved =
+                offer.myProgress.currentEarnings >= tier.minEarnings;
+
+            return Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: isAchieved
+                    ? colorScheme.success.withValues(alpha: 0.15)
+                    : colorScheme.border.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: isAchieved
+                      ? colorScheme.success
+                      : colorScheme.border.withValues(alpha: 0.5),
+                  width: 1,
+                ),
+              ),
+              child: Text(
+                '₹${tier.incentiveAmount.toInt()}',
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: isAchieved
+                      ? colorScheme.success
+                      : colorScheme.textSecondary,
+                  letterSpacing: -0.15,
+                  height: 1.4,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Progress bar
+        _buildProgressBar(colorScheme, offer),
+
+        const SizedBox(height: 12),
+
+        // Conditions
+        Text(
+          'Conditions',
+          style: GoogleFonts.inter(
+            color: colorScheme.textPrimary,
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            letterSpacing: -0.2,
+            height: 1.5,
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+          offer.description,
+          style: GoogleFonts.inter(
+            color: colorScheme.textSecondary,
+            fontSize: 13,
+            fontWeight: FontWeight.w400,
+            letterSpacing: -0.15,
+            height: 1.5,
+          ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildProgressBar(AppColorScheme colorScheme, IncentiveOffer offer) {
+    final progress = offer.myProgress;
+    final maxTarget =
+        offer.tiers.isNotEmpty ? offer.tiers.last.minEarnings : 1.0;
+    final progressPercent =
+        (progress.currentEarnings / maxTarget).clamp(0.0, 1.0);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              'Earned: ₹${progress.currentEarnings.toInt()}',
+              style: GoogleFonts.inter(
+                color: colorScheme.textPrimary,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                letterSpacing: -0.2,
+                height: 1.5,
+              ),
+            ),
+            Text(
+              'Target: ₹${maxTarget.toInt()}',
+              style: GoogleFonts.inter(
+                color: colorScheme.textSecondary,
+                fontSize: 13,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.15,
+                height: 1.5,
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
+        Stack(
+          children: [
+            Container(
+              height: 8,
+              decoration: BoxDecoration(
+                color: colorScheme.border.withValues(alpha: 0.3),
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            FractionallySizedBox(
+              widthFactor: progressPercent,
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildUpcomingInfo(AppColorScheme colorScheme, IncentiveOffer offer) {
+    final daysUntil = offer.startDate.difference(DateTime.now()).inDays;
+
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.info.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: colorScheme.info.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.calendar_today,
+            size: 20,
+            color: colorScheme.info,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Starts in $daysUntil ${daysUntil == 1 ? 'day' : 'days'}',
+              style: GoogleFonts.inter(
+                color: colorScheme.textPrimary,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.2,
+                height: 1.5,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExpiredInfo(AppColorScheme colorScheme, IncentiveOffer offer) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: colorScheme.textSecondary.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: colorScheme.border.withValues(alpha: 0.3),
+          width: 1,
+        ),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            Icons.check_circle_outline,
+            size: 20,
+            color: colorScheme.textSecondary,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              'Offer ended on ${DateFormat('MMM dd, yyyy').format(offer.endDate)}',
+              style: GoogleFonts.inter(
+                color: colorScheme.textSecondary,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                letterSpacing: -0.2,
+                height: 1.5,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildShimmerBox(
+      double width, double height, double radius, AppColorScheme colorScheme) {
+    return AnimatedBuilder(
+      animation: _shimmerAnimation,
+      builder: (context, child) {
+        return Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius),
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                colorScheme.surfaceVariant,
+                colorScheme.surface,
+                colorScheme.surfaceVariant,
+              ],
+              stops: [
+                (_shimmerAnimation.value - 0.3).clamp(0.0, 1.0),
+                _shimmerAnimation.value.clamp(0.0, 1.0),
+                (_shimmerAnimation.value + 0.3).clamp(0.0, 1.0),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildShimmerLoading(AppColorScheme colorScheme) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      children: [
+        const SizedBox(height: 20),
+        _buildShimmerBox(140, 20, 4, colorScheme),
+        const SizedBox(height: 12),
+        _buildShimmerOfferCard(colorScheme),
+        const SizedBox(height: 12),
+        _buildShimmerOfferCard(colorScheme),
+        const SizedBox(height: 24),
+        _buildShimmerBox(140, 20, 4, colorScheme),
+        const SizedBox(height: 12),
+        _buildShimmerOfferCard(colorScheme),
+      ],
+    );
+  }
+
+  Widget _buildShimmerOfferCard(AppColorScheme colorScheme) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: ShapeDecoration(
+        color: colorScheme.cardBackground,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        shadows: colorScheme.cardShadow,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Date badge and live indicator row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildShimmerBox(80, 28, 8, colorScheme),
+              _buildShimmerBox(60, 28, 8, colorScheme),
+            ],
+          ),
+          const SizedBox(height: 12),
+          _buildShimmerBox(double.infinity, 24, 4, colorScheme),
+          const SizedBox(height: 8),
+          _buildShimmerBox(140, 16, 4, colorScheme),
+          const SizedBox(height: 16),
+          Container(
+            height: 1,
+            color: colorScheme.border.withValues(alpha: 0.3),
+          ),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              _buildShimmerBox(60, 28, 8, colorScheme),
+              const SizedBox(width: 8),
+              _buildShimmerBox(60, 28, 8, colorScheme),
+              const SizedBox(width: 8),
+              _buildShimmerBox(60, 28, 8, colorScheme),
+            ],
+          ),
+          const SizedBox(height: 16),
+          _buildShimmerBox(double.infinity, 8, 4, colorScheme),
+          const SizedBox(height: 12),
+          _buildShimmerBox(double.infinity, 40, 12, colorScheme),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmptyState(AppColorScheme colorScheme) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: colorScheme.border.withValues(alpha: 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.card_giftcard,
+              size: 40,
+              color: colorScheme.textSecondary,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'No Offers Available',
+            style: GoogleFonts.inter(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: colorScheme.textPrimary,
+              letterSpacing: -0.55,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            'Check back later for exciting offers',
+            style: GoogleFonts.inter(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: colorScheme.textSecondary,
+              letterSpacing: -0.2,
+              height: 1.5,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildErrorState(AppColorScheme colorScheme, String error) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 80,
+            height: 80,
+            decoration: BoxDecoration(
+              color: colorScheme.error.withValues(alpha: 0.15),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.error_outline,
+              size: 40,
+              color: colorScheme.error,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Error Loading Offers',
+            style: GoogleFonts.inter(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: colorScheme.textPrimary,
+              letterSpacing: -0.55,
+              height: 1.3,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 32),
+            child: Text(
+              error,
+              style: GoogleFonts.inter(
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
+                color: colorScheme.textSecondary,
+                letterSpacing: -0.2,
+                height: 1.5,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+          const SizedBox(height: 24),
+          GestureDetector(
+            onTap: () {
+              HapticFeedback.lightImpact();
+              context.read<IncentiveProvider>().getAllOffersGrouped();
+            },
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              decoration: BoxDecoration(
+                color: colorScheme.primary,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: colorScheme.buttonShadow,
+              ),
+              child: Text(
+                'Retry',
+                style: GoogleFonts.inter(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                  letterSpacing: -0.25,
+                  height: 1.5,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "515859666283",
+    "project_id": "zenfoo-4860d",
+    "storage_bucket": "zenfoo-4860d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515859666283:android:99d3b81e480c38cee1a82e",
+        "android_client_info": {
+          "package_name": "com.zenfoo.customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8bIm1xmhuXlXm5OozVpFP69TkOvOn_T4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "515859666283-7sgvdh3s3p46f17d3firt4gn67pier0b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zenfoo.partner"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515859666283:android:8bb29a45bb352c8de1a82e",
+        "android_client_info": {
+          "package_name": "com.zenfoo.partner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8bIm1xmhuXlXm5OozVpFP69TkOvOn_T4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "515859666283-7sgvdh3s3p46f17d3firt4gn67pier0b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zenfoo.partner"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515859666283:android:d1a03d05458eb8b4e1a82e",
+        "android_client_info": {
+          "package_name": "com.zenfoo.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8bIm1xmhuXlXm5OozVpFP69TkOvOn_T4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515859666283-759hsjekcj0mhpvf6ccmovkuonu05426.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "515859666283-7sgvdh3s3p46f17d3firt4gn67pier0b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.zenfoo.partner"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

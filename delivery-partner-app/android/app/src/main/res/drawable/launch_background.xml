@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Plain white while the Flutter engine boots, so it blends into the
+         Flutter SplashScreen (lib/view/splash_screen.dart) which is also white.
+         The native splash logo below is DISABLED - we keep only one splash. -->
+    <item>
+        <color android:color="@android:color/white"/>
+    </item>
+    <!-- <item>
+        <bitmap android:gravity="fill" android:src="@drawable/background"/>
+    </item>
+    <item>
+        <bitmap android:gravity="center" android:src="@drawable/splash"/>
+    </item> -->
+</layer-list>

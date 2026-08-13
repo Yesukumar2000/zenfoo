@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter build apk --release --stacktrace)",
+      "Bash(./gradlew assembleRelease --stacktrace)",
+      "Bash(flutter build apk --release)",
+      "Bash(flutter clean)",
+      "Bash(flutter pub get)",
+      "Bash(./gradlew :cloud_firestore:dependencies --configuration releaseCompileClasspath)",
+      "Bash(./gradlew :cloud_firestore:dependencies --configuration releaseRuntimeClasspath)",
+      "Bash(./gradlew :firebase_core:compileReleaseJavaWithJavac)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://storage.googleapis.com/download.flutter.io/io/flutter/flutter_embedding_release/1.0.0-035316565ad77281a75305515e4682e6c4c6f7ca/flutter_embedding_release-1.0.0-035316565ad77281a75305515e4682e6c4c6f7ca.pom\")",
+      "Bash(flutter analyze:*)"
+    ]
+  }
+}

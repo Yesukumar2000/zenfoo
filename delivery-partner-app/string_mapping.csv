@@ -1,0 +1,136 @@
+old_string,key_name,file_source,notes
+Permission denied. Please enable camera or gallery access.,permission_denied_camera_gallery,change_bank_details_screen / change_pan_details_screen,Appears in multiple files
+$title feature coming soon,feature_coming_soon,help_center_screen,Dynamic string
+about_description,about_description,profile_screen,Already a key
+about_section_title,about_section_title,profile_screen,Already a key
+about_us,about_us,profile_screen,Already a key
+account_holder_name,account_holder_name,change_bank_details_screen,Already a key
+account_holder_name_must_match,account_holder_name_must_match,change_bank_details_screen,Already a key
+account_number,account_number,change_bank_details_screen,Already a key
+app_about,app_about,profile_screen,Already a key
+app_language,app_language,profile_screen,Already a key
+app_name,app_name,profile_screen,Already a key
+app_settings,app_settings,profile_screen,Already a key
+assets,assets,profile_screen,Already a key
+bank_details_fetched,bank_details_fetched,change_bank_details_screen,Already a key
+bank_details_updated,bank_details_updated,change_bank_details_screen,Already a key
+bank_name,bank_name,change_bank_details_screen,Already a key
+build,build,profile_screen,Already a key
+call_to_us,call_to_us,help_center_screen,Already a key
+cancel,cancel,profile_screen,Already a key
+cash_deposited_issues,cash_deposited_issues,help_center_screen,Already a key
+change_bank_details,change_bank_details,change_bank_details_screen / help_center_screen,Already a key
+change_driving_license,change_driving_license,help_center_screen,Already a key
+change_pan_details,change_pan_details,change_pan_details_screen / help_center_screen,Already a key
+change_phone_number,change_phone_number,change_phone_number_screen / help_center_screen,Already a key
+change_zone,change_zone,help_center_screen,Already a key
+chat_with_support_team,chat_with_support_team,help_center_screen,Already a key
+chat_with_us,chat_with_us,help_center_screen,Already a key
+choose_order_type,choose_order_type,profile_screen / help_center_screen,Already a key
+current_phone_number,current_phone_number,change_phone_number_screen,Already a key
+dark_theme,dark_theme,profile_screen,Already a key
+default_store_location,default_store_location,profile_screen,Already a key
+delete_account,delete_account,profile_screen,Already a key
+developer,developer,profile_screen,Already a key
+didnt_receive_otp,didnt_receive_otp,change_phone_number_screen,Already a key
+double_check_account_number,double_check_account_number,change_bank_details_screen,Already a key
+duty_issues,duty_issues,help_center_screen,Already a key
+earnings_dashboard,earnings_dashboard,profile_screen,Already a key
+emergency_contacts,emergency_contacts,profile_screen,Already a key
+enter_account_holder_name,enter_account_holder_name,change_bank_details_screen,Already a key
+enter_account_number,enter_account_number,change_bank_details_screen,Already a key
+enter_bank_name,enter_bank_name,change_bank_details_screen,Already a key
+enter_full_name,enter_full_name,change_pan_details_screen,Already a key
+enter_ifsc_code,enter_ifsc_code,change_bank_details_screen,Already a key
+enter_new_phone,enter_new_phone,change_phone_number_screen,Already a key
+enter_otp,enter_otp,change_phone_number_screen,Already a key
+enter_pan_number,enter_pan_number,change_pan_details_screen,Already a key
+error,error,profile_screen,Already a key
+extra_floating_deposited_issue,extra_floating_deposited_issue,help_center_screen,Already a key
+failed_load_languages,failed_load_languages,profile_screen,Already a key
+floating_cash,floating_cash,help_center_screen,Already a key
+floating_cash_issues,floating_cash_issues,help_center_screen,Already a key
+full_name,full_name,change_pan_details_screen,Already a key
+get_direct_support_phone,get_direct_support_phone,help_center_screen,Already a key
+get_help_payment_issues,get_help_payment_issues,help_center_screen,Already a key
+gigs_history,gigs_history,profile_screen,Already a key
+go_to_store,go_to_store,profile_screen,Already a key
+got_it,got_it,profile_screen,Already a key
+gps_navigation,gps_navigation,profile_screen,Already a key
+help_center,help_center,profile_screen / help_center_screen,Already a key
+help_shift_management,help_shift_management,help_center_screen,Already a key
+help_weather_features,help_weather_features,help_center_screen,Already a key
+help_with_updating_profile,help_with_updating_profile,help_center_screen,Already a key
+ifsc_code,ifsc_code,change_bank_details_screen,Already a key
+ifsc_code_must_be_correct,ifsc_code_must_be_correct,change_bank_details_screen,Already a key
+important_information,important_information,change_bank_details_screen / change_pan_details_screen / change_phone_number_screen,Already a key
+incentive_issues,incentive_issues,help_center_screen,Already a key
+incorrect_payout_to_bank,incorrect_payout_to_bank,help_center_screen,Already a key
+invalid_ifsc_format,invalid_ifsc_format,change_bank_details_screen,Already a key
+invalid_otp,invalid_otp,change_phone_number_screen,Already a key
+invalid_pan_format,invalid_pan_format,change_pan_details_screen,Already a key
+invalid_phone_number,invalid_phone_number,change_phone_number_screen,Already a key
+joining_bonus_issue,joining_bonus_issue,help_center_screen,Already a key
+key_features,key_features,profile_screen,Already a key
+learning_center,learning_center,profile_screen,Already a key
+log_out,log_out,profile_screen,Already a key
+logout,logout,profile_screen,Already a key
+logout_confirmation,logout_confirmation,profile_screen,Already a key
+manage,manage,profile_screen,Already a key
+multi_order_issues,multi_order_issues,help_center_screen,Already a key
+name_must_match_pan,name_must_match_pan,change_pan_details_screen,Already a key
+new_phone_number,new_phone_number,change_phone_number_screen,Already a key
+no_data,no_data,profile_screen,Already a key
+no_languages_available,no_languages_available,profile_screen,Already a key
+not_getting_orders,not_getting_orders,help_center_screen,Already a key
+notifications,notifications,profile_screen,Already a key
+order_earning_issues,order_earning_issues,help_center_screen,Already a key
+otp_hint,otp_hint,change_phone_number_screen,Already a key
+otp_sent_successfully,otp_sent_successfully,change_phone_number_screen,Already a key
+otp_valid_for_10_minutes,otp_valid_for_10_minutes,change_phone_number_screen,Already a key
+other_information,other_information,profile_screen,Already a key
+pan_card_image,pan_card_image,change_pan_details_screen,Already a key
+pan_details_updated,pan_details_updated,change_pan_details_screen,Already a key
+pan_must_be_readable,pan_must_be_readable,change_pan_details_screen,Already a key
+pan_number,pan_number,change_pan_details_screen,Already a key
+pan_number_must_be_10_chars,pan_number_must_be_10_chars,change_pan_details_screen,Already a key
+passbook_cheque,passbook_cheque,change_bank_details_screen,Already a key
+payout_issues,payout_issues,help_center_screen,Already a key
+performance_analytics,performance_analytics,profile_screen,Already a key
+phone_change_info,phone_change_info,change_phone_number_screen,Already a key
+phone_must_be_valid,phone_must_be_valid,change_phone_number_screen,Already a key
+phone_number_updated,phone_number_updated,change_phone_number_screen,Already a key
+pickup_point_locations,pickup_point_locations,profile_screen / help_center_screen,Already a key
+please_enter_ifsc,please_enter_ifsc,change_bank_details_screen,Already a key
+please_fill_all_fields,please_fill_all_fields,change_bank_details_screen / change_pan_details_screen,Already a key
+please_upload_pan_image,please_upload_pan_image,change_pan_details_screen,Already a key
+please_upload_passbook_image,please_upload_passbook_image,change_bank_details_screen,Already a key
+png_jpg_max_5mb,png_jpg_max_5mb,change_bank_details_screen / change_pan_details_screen,Already a key
+pocketing_issues,pocketing_issues,help_center_screen,Already a key
+privacy_policy,privacy_policy,profile_screen,Already a key
+profile_management,profile_management,profile_screen / help_center_screen / change_bank_details_screen / change_pan_details_screen / change_phone_number_screen,Already a key
+rain_mode_activation,rain_mode_activation,help_center_screen,Already a key
+real_time_orders,real_time_orders,profile_screen,Already a key
+resolve_earning_problems,resolve_earning_problems,help_center_screen,Already a key
+resolve_wallet_problems,resolve_wallet_problems,help_center_screen,Already a key
+resend_otp,resend_otp,change_phone_number_screen,Already a key
+secure_your_account,secure_your_account,change_phone_number_screen,Already a key
+select_issue_type,select_issue_type,help_center_screen,Already a key
+select_language,select_language,profile_screen,Already a key
+select_what_to_update,select_what_to_update,help_center_screen,Already a key
+send_otp,send_otp,change_phone_number_screen,Already a key
+share_the_app,share_the_app,profile_screen,Already a key
+support,support,help_center_screen,Already a key
+support_24_7,support_24_7,profile_screen,Already a key
+terms_of_service,terms_of_service,profile_screen,Already a key
+trip_history,trip_history,profile_screen,Already a key
+update,update,change_bank_details_screen / change_pan_details_screen,Already a key
+update_personal_information,update_personal_information,help_center_screen,Already a key
+upload_clear_image,upload_clear_image,change_bank_details_screen / change_pan_details_screen,Already a key
+upload_pan_image,upload_pan_image,change_pan_details_screen,Already a key
+upload_passbook_cheque,upload_passbook_cheque,change_bank_details_screen,Already a key
+verify_otp,verify_otp,change_phone_number_screen,Already a key
+version,version,profile_screen,Already a key
+view,view,profile_screen,Already a key
+yes_logout,yes_logout,profile_screen,Already a key
+your_offers,your_offers,profile_screen,Already a key

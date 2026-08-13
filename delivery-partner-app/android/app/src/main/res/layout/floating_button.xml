@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/floatingBtn"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/floating_bg"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitCenter"
+        android:padding="8dp"
+        android:elevation="16dp"
+        android:contentDescription="Zenfoo Delivery Floating Button" />
+
+    <!-- Online status indicator -->
+    <View
+        android:id="@+id/statusIndicator"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/status_indicator"
+        android:elevation="18dp" />
+
+</FrameLayout>

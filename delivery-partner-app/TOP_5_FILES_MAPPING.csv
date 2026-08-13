@@ -1,0 +1,136 @@
+hardcoded_string,recommended_key,files_affected,pattern,priority,status
+Permission denied. Please enable camera or gallery access.,permission_denied_camera_gallery,change_bank_details_screen.dart / change_pan_details_screen.dart,Single quoted string,HIGH,Found
+$title feature coming soon,feature_coming_soon,help_center_screen.dart,Dynamic string with interpolation,MEDIUM,Found
+about_description,about_description,profile_screen.dart,Already localized,LOW,OK
+about_section_title,about_section_title,profile_screen.dart,Already localized,LOW,OK
+about_us,about_us,profile_screen.dart,Already localized,LOW,OK
+account_holder_name,account_holder_name,change_bank_details_screen.dart,Already localized,LOW,OK
+account_holder_name_must_match,account_holder_name_must_match,change_bank_details_screen.dart,Already localized,LOW,OK
+account_number,account_number,change_bank_details_screen.dart,Already localized,LOW,OK
+app_about,app_about,profile_screen.dart,Already localized,LOW,OK
+app_language,app_language,profile_screen.dart,Already localized,LOW,OK
+app_name,app_name,profile_screen.dart,Already localized,LOW,OK
+app_settings,app_settings,profile_screen.dart,Already localized,LOW,OK
+assets,assets,profile_screen.dart,Already localized,LOW,OK
+bank_details_fetched,bank_details_fetched,change_bank_details_screen.dart,Already localized,LOW,OK
+bank_details_updated,bank_details_updated,change_bank_details_screen.dart,Already localized,LOW,OK
+bank_name,bank_name,change_bank_details_screen.dart,Already localized,LOW,OK
+build,build,profile_screen.dart,Already localized,LOW,OK
+call_to_us,call_to_us,help_center_screen.dart,Already localized,LOW,OK
+cancel,cancel,profile_screen.dart,Already localized,LOW,OK
+cash_deposited_issues,cash_deposited_issues,help_center_screen.dart,Already localized,LOW,OK
+change_bank_details,change_bank_details,change_bank_details_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+change_driving_license,change_driving_license,help_center_screen.dart,Already localized,LOW,OK
+change_pan_details,change_pan_details,change_pan_details_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+change_phone_number,change_phone_number,change_phone_number_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+change_zone,change_zone,help_center_screen.dart,Already localized,LOW,OK
+chat_with_support_team,chat_with_support_team,help_center_screen.dart,Already localized,LOW,OK
+chat_with_us,chat_with_us,help_center_screen.dart,Already localized,LOW,OK
+choose_order_type,choose_order_type,profile_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+current_phone_number,current_phone_number,change_phone_number_screen.dart,Already localized,LOW,OK
+dark_theme,dark_theme,profile_screen.dart,Already localized,LOW,OK
+default_store_location,default_store_location,profile_screen.dart,Already localized,LOW,OK
+delete_account,delete_account,profile_screen.dart,Already localized,LOW,OK
+developer,developer,profile_screen.dart,Already localized,LOW,OK
+didnt_receive_otp,didnt_receive_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+double_check_account_number,double_check_account_number,change_bank_details_screen.dart,Already localized,LOW,OK
+duty_issues,duty_issues,help_center_screen.dart,Already localized,LOW,OK
+earnings_dashboard,earnings_dashboard,profile_screen.dart,Already localized,LOW,OK
+emergency_contacts,emergency_contacts,profile_screen.dart,Already localized,LOW,OK
+enter_account_holder_name,enter_account_holder_name,change_bank_details_screen.dart,Already localized,LOW,OK
+enter_account_number,enter_account_number,change_bank_details_screen.dart,Already localized,LOW,OK
+enter_bank_name,enter_bank_name,change_bank_details_screen.dart,Already localized,LOW,OK
+enter_full_name,enter_full_name,change_pan_details_screen.dart,Already localized,LOW,OK
+enter_ifsc_code,enter_ifsc_code,change_bank_details_screen.dart,Already localized,LOW,OK
+enter_new_phone,enter_new_phone,change_phone_number_screen.dart,Already localized,LOW,OK
+enter_otp,enter_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+enter_pan_number,enter_pan_number,change_pan_details_screen.dart,Already localized,LOW,OK
+error,error,profile_screen.dart,Already localized,LOW,OK
+extra_floating_deposited_issue,extra_floating_deposited_issue,help_center_screen.dart,Already localized,LOW,OK
+failed_load_languages,failed_load_languages,profile_screen.dart,Already localized,LOW,OK
+floating_cash,floating_cash,help_center_screen.dart,Already localized,LOW,OK
+floating_cash_issues,floating_cash_issues,help_center_screen.dart,Already localized,LOW,OK
+full_name,full_name,change_pan_details_screen.dart,Already localized,LOW,OK
+get_direct_support_phone,get_direct_support_phone,help_center_screen.dart,Already localized,LOW,OK
+get_help_payment_issues,get_help_payment_issues,help_center_screen.dart,Already localized,LOW,OK
+gigs_history,gigs_history,profile_screen.dart,Already localized,LOW,OK
+go_to_store,go_to_store,profile_screen.dart,Already localized,LOW,OK
+got_it,got_it,profile_screen.dart,Already localized,LOW,OK
+gps_navigation,gps_navigation,profile_screen.dart,Already localized,LOW,OK
+help_center,help_center,profile_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+help_shift_management,help_shift_management,help_center_screen.dart,Already localized,LOW,OK
+help_weather_features,help_weather_features,help_center_screen.dart,Already localized,LOW,OK
+help_with_updating_profile,help_with_updating_profile,help_center_screen.dart,Already localized,LOW,OK
+ifsc_code,ifsc_code,change_bank_details_screen.dart,Already localized,LOW,OK
+ifsc_code_must_be_correct,ifsc_code_must_be_correct,change_bank_details_screen.dart,Already localized,LOW,OK
+important_information,important_information,change_bank_details_screen.dart / change_pan_details_screen.dart / change_phone_number_screen.dart,Already localized,LOW,OK
+incentive_issues,incentive_issues,help_center_screen.dart,Already localized,LOW,OK
+incorrect_payout_to_bank,incorrect_payout_to_bank,help_center_screen.dart,Already localized,LOW,OK
+invalid_ifsc_format,invalid_ifsc_format,change_bank_details_screen.dart,Already localized,LOW,OK
+invalid_otp,invalid_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+invalid_pan_format,invalid_pan_format,change_pan_details_screen.dart,Already localized,LOW,OK
+invalid_phone_number,invalid_phone_number,change_phone_number_screen.dart,Already localized,LOW,OK
+joining_bonus_issue,joining_bonus_issue,help_center_screen.dart,Already localized,LOW,OK
+key_features,key_features,profile_screen.dart,Already localized,LOW,OK
+learning_center,learning_center,profile_screen.dart,Already localized,LOW,OK
+log_out,log_out,profile_screen.dart,Already localized,LOW,OK
+logout,logout,profile_screen.dart,Already localized,LOW,OK
+logout_confirmation,logout_confirmation,profile_screen.dart,Already localized,LOW,OK
+manage,manage,profile_screen.dart,Already localized,LOW,OK
+multi_order_issues,multi_order_issues,help_center_screen.dart,Already localized,LOW,OK
+name_must_match_pan,name_must_match_pan,change_pan_details_screen.dart,Already localized,LOW,OK
+new_phone_number,new_phone_number,change_phone_number_screen.dart,Already localized,LOW,OK
+no_data,no_data,profile_screen.dart,Already localized,LOW,OK
+no_languages_available,no_languages_available,profile_screen.dart,Already localized,LOW,OK
+not_getting_orders,not_getting_orders,help_center_screen.dart,Already localized,LOW,OK
+notifications,notifications,profile_screen.dart,Already localized,LOW,OK
+order_earning_issues,order_earning_issues,help_center_screen.dart,Already localized,LOW,OK
+otp_hint,otp_hint,change_phone_number_screen.dart,Already localized,LOW,OK
+otp_sent_successfully,otp_sent_successfully,change_phone_number_screen.dart,Already localized,LOW,OK
+otp_valid_for_10_minutes,otp_valid_for_10_minutes,change_phone_number_screen.dart,Already localized,LOW,OK
+other_information,other_information,profile_screen.dart,Already localized,LOW,OK
+pan_card_image,pan_card_image,change_pan_details_screen.dart,Already localized,LOW,OK
+pan_details_updated,pan_details_updated,change_pan_details_screen.dart,Already localized,LOW,OK
+pan_must_be_readable,pan_must_be_readable,change_pan_details_screen.dart,Already localized,LOW,OK
+pan_number,pan_number,change_pan_details_screen.dart,Already localized,LOW,OK
+pan_number_must_be_10_chars,pan_number_must_be_10_chars,change_pan_details_screen.dart,Already localized,LOW,OK
+passbook_cheque,passbook_cheque,change_bank_details_screen.dart,Already localized,LOW,OK
+payout_issues,payout_issues,help_center_screen.dart,Already localized,LOW,OK
+performance_analytics,performance_analytics,profile_screen.dart,Already localized,LOW,OK
+phone_change_info,phone_change_info,change_phone_number_screen.dart,Already localized,LOW,OK
+phone_must_be_valid,phone_must_be_valid,change_phone_number_screen.dart,Already localized,LOW,OK
+phone_number_updated,phone_number_updated,change_phone_number_screen.dart,Already localized,LOW,OK
+pickup_point_locations,pickup_point_locations,profile_screen.dart / help_center_screen.dart,Already localized,LOW,OK
+please_enter_ifsc,please_enter_ifsc,change_bank_details_screen.dart,Already localized,LOW,OK
+please_fill_all_fields,please_fill_all_fields,change_bank_details_screen.dart / change_pan_details_screen.dart,Already localized,LOW,OK
+please_upload_pan_image,please_upload_pan_image,change_pan_details_screen.dart,Already localized,LOW,OK
+please_upload_passbook_image,please_upload_passbook_image,change_bank_details_screen.dart,Already localized,LOW,OK
+png_jpg_max_5mb,png_jpg_max_5mb,change_bank_details_screen.dart / change_pan_details_screen.dart,Already localized,LOW,OK
+pocketing_issues,pocketing_issues,help_center_screen.dart,Already localized,LOW,OK
+privacy_policy,privacy_policy,profile_screen.dart,Already localized,LOW,OK
+profile_management,profile_management,profile_screen.dart / help_center_screen.dart / change_bank_details_screen.dart / change_pan_details_screen.dart / change_phone_number_screen.dart,Already localized,LOW,OK
+rain_mode_activation,rain_mode_activation,help_center_screen.dart,Already localized,LOW,OK
+real_time_orders,real_time_orders,profile_screen.dart,Already localized,LOW,OK
+resolve_earning_problems,resolve_earning_problems,help_center_screen.dart,Already localized,LOW,OK
+resolve_wallet_problems,resolve_wallet_problems,help_center_screen.dart,Already localized,LOW,OK
+resend_otp,resend_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+secure_your_account,secure_your_account,change_phone_number_screen.dart,Already localized,LOW,OK
+select_issue_type,select_issue_type,help_center_screen.dart,Already localized,LOW,OK
+select_language,select_language,profile_screen.dart,Already localized,LOW,OK
+select_what_to_update,select_what_to_update,help_center_screen.dart,Already localized,LOW,OK
+send_otp,send_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+share_the_app,share_the_app,profile_screen.dart,Already localized,LOW,OK
+support,support,help_center_screen.dart,Already localized,LOW,OK
+support_24_7,support_24_7,profile_screen.dart,Already localized,LOW,OK
+terms_of_service,terms_of_service,profile_screen.dart,Already localized,LOW,OK
+trip_history,trip_history,profile_screen.dart,Already localized,LOW,OK
+update,update,change_bank_details_screen.dart / change_pan_details_screen.dart,Already localized,LOW,OK
+update_personal_information,update_personal_information,help_center_screen.dart,Already localized,LOW,OK
+upload_clear_image,upload_clear_image,change_bank_details_screen.dart / change_pan_details_screen.dart,Already localized,LOW,OK
+upload_pan_image,upload_pan_image,change_pan_details_screen.dart,Already localized,LOW,OK
+upload_passbook_cheque,upload_passbook_cheque,change_bank_details_screen.dart,Already localized,LOW,OK
+verify_otp,verify_otp,change_phone_number_screen.dart,Already localized,LOW,OK
+version,version,profile_screen.dart,Already localized,LOW,OK
+view,view,profile_screen.dart,Already localized,LOW,OK
+yes_logout,yes_logout,profile_screen.dart,Already localized,LOW,OK
+your_offers,your_offers,profile_screen.dart,Already localized,LOW,OK

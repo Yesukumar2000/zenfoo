@@ -1,0 +1,275 @@
+import 'package:flutter/material.dart';
+
+/// App Color Scheme for Light and Dark modes
+class AppColorScheme {
+  // Primary colors
+  final Color primary;
+  final Color primaryLight;
+  final Color primaryDark;
+
+  // Text colors
+  final Color textPrimary;
+  final Color textSecondary;
+  final Color textTertiary;
+  final Color textDisabled;
+
+  // Background colors
+  final Color background;
+  final Color surface;
+  final Color surfaceElevated;
+  final Color surfaceContainer;
+  final Color surfaceVariant;
+
+  // Border colors
+  final Color border;
+  final Color borderStrong;
+  final Color divider;
+
+  // Status colors
+  final Color success;
+  final Color warning;
+  final Color error;
+  final Color info;
+
+  // Status backgrounds
+  final Color successBg;
+  final Color warningBg;
+  final Color errorBg;
+  final Color infoBg;
+
+  // Input colors
+  final Color inputBackground;
+  final Color inputBorder;
+  final Color inputPlaceholder;
+  final Color inputFocusBorder;
+
+  // Icon colors
+  final Color iconPrimary;
+  final Color iconSecondary;
+  final Color iconDisabled;
+
+  // Button colors
+  final Color buttonPrimaryBg;
+  final Color buttonPrimaryText;
+  final Color buttonSecondaryBg;
+  final Color buttonSecondaryText;
+  final Color buttonDisabledBg;
+  final Color buttonDisabledText;
+
+  // Card colors
+  final Color cardBackground;
+  final Color cardBorder;
+  final List<BoxShadow> cardShadow;
+
+  // Button colors
+  final List<BoxShadow> buttonShadow;
+
+  // Overlay colors
+  final Color overlay;
+  final Color scrim;
+
+  const AppColorScheme({
+    required this.primary,
+    required this.primaryLight,
+    required this.primaryDark,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.textTertiary,
+    required this.textDisabled,
+    required this.background,
+    required this.surface,
+    required this.surfaceElevated,
+    required this.surfaceContainer,
+    required this.surfaceVariant,
+    required this.border,
+    required this.borderStrong,
+    required this.divider,
+    required this.success,
+    required this.warning,
+    required this.error,
+    required this.info,
+    required this.successBg,
+    required this.warningBg,
+    required this.errorBg,
+    required this.infoBg,
+    required this.inputBackground,
+    required this.inputBorder,
+    required this.inputPlaceholder,
+    required this.inputFocusBorder,
+    required this.iconPrimary,
+    required this.iconSecondary,
+    required this.iconDisabled,
+    required this.buttonPrimaryBg,
+    required this.buttonPrimaryText,
+    required this.buttonSecondaryBg,
+    required this.buttonSecondaryText,
+    required this.buttonDisabledBg,
+    required this.buttonDisabledText,
+    required this.cardBackground,
+    required this.cardBorder,
+    required this.cardShadow,
+    required this.overlay,
+    required this.scrim,
+    required this.buttonShadow,
+  });
+
+  /// Light Color Scheme
+  static const AppColorScheme light = AppColorScheme(
+    // Primary colors
+    primary: Color(0xFF9AC444), // Lime green accent
+    primaryLight: Color(0xFFB8DC6F),
+    primaryDark: Color(0xFF7BA82E),
+
+    // Text colors
+    textPrimary: Color(0xFF111827), // Near-black
+    textSecondary: Color(0xFF6B7280), // Medium gray
+    textTertiary: Color(0xFF9CA3AF), // Light gray
+    textDisabled: Color(0xFFD1D5DB),
+
+    // Background colors
+    background: Color(0xFFFAFAFA), // Soft gray
+    surface: Color(0xFFFFFFFF), // Pure white
+    surfaceElevated: Color(0xFFFFFFFF), // Pure white with shadows
+    surfaceContainer: Color(0xFFF3F4F6),
+    surfaceVariant:
+        Color(0xFFF9FAFB), // Light gray for shimmer/subtle backgrounds
+
+    // Border colors
+    border: Color(0xFFF0F0F0), // Subtle border
+    borderStrong: Color(0xFFD1D5DB),
+    divider: Color(0xFFF3F4F6),
+
+    // Status colors
+    success: Color(0xFF16A34A),
+    warning: Color(0xFFF59E0B),
+    error: Color(0xFFEF4444),
+    info: Color(0xFF3B82F6),
+
+    // Status backgrounds
+    successBg: Color(0xFFDCFCE7),
+    warningBg: Color(0xFFFEF3C7),
+    errorBg: Color(0xFFFEE2E2),
+    infoBg: Color(0xFFEFF6FF),
+
+    // Input colors
+    inputBackground: Color(0xFFF3F4F6),
+    inputBorder: Color(0xFFE5E7EB),
+    inputPlaceholder: Color(0xFF9CA3AF),
+    inputFocusBorder: Color(0xFF9AC444),
+
+    // Icon colors
+    iconPrimary: Color(0xFF111827),
+    iconSecondary: Color(0xFF6B7280),
+    iconDisabled: Color(0xFFD1D5DB),
+
+    // Button colors
+    buttonPrimaryBg: Color(0xFF9AC444),
+    buttonPrimaryText: Color(0xFFFFFFFF),
+    buttonSecondaryBg: Color(0xFFF3F4F6),
+    buttonSecondaryText: Color(0xFF111827),
+    buttonDisabledBg: Color(0xFFF3F4F6),
+    buttonDisabledText: Color(0xFFD1D5DB),
+
+    // Card colors
+    cardBackground: Color(0xFFFFFFFF),
+    cardBorder: Color(0xFFF0F0F0),
+    cardShadow: [
+      BoxShadow(
+        color: Color(0x0A000000),
+        blurRadius: 12,
+        offset: Offset(0, 2),
+        spreadRadius: 0,
+      ),
+    ],
+    buttonShadow: [
+      BoxShadow(
+        color: Color(0x4D9AC444),
+        blurRadius: 16,
+        offset: Offset(0, 4),
+      ),
+    ], // Very subtle, 10% opacity
+
+    // Overlay colors
+    overlay: Color(0x80000000),
+    scrim: Color(0xCC000000),
+  );
+
+  /// Dark Color Scheme
+  static const AppColorScheme dark = AppColorScheme(
+    // Primary colors
+    primary: Color(0xFF9AC444), // Same lime green
+    primaryLight: Color(0xFFB8DC6F),
+    primaryDark: Color(0xFF7BA82E),
+
+    // Text colors
+    textPrimary: Color(0xFFF9FAFB), // Near-white
+    textSecondary: Color(0xFFD1D5DB), // Light gray
+    textTertiary: Color(0xFF9CA3AF), // Medium gray
+    textDisabled: Color(0xFF6B7280),
+
+    // Background colors
+    background: Color(0xFF111827), // Very dark gray
+    surface: Color(0xFF1F2937), // Dark gray
+    surfaceElevated: Color(0xFF1F2937), // Dark gray with shadows
+    surfaceContainer: Color(0xFF1F2937),
+    surfaceVariant: Color(0xFF374151), // Medium dark gray for shimmer
+
+    // Border colors
+    border: Color(0xFF374151), // Subtle dark border
+    borderStrong: Color(0xFF4B5563),
+    divider: Color(0xFF374151),
+
+    // Status colors
+    success: Color(0xFF16A34A),
+    warning: Color(0xFFF59E0B),
+    error: Color(0xFFEF4444),
+    info: Color(0xFF3B82F6),
+
+    // Status backgrounds
+    successBg: Color(0xFFDCFCE7),
+    warningBg: Color(0xFFFEF3C7),
+    errorBg: Color(0xFFFEE2E2),
+    infoBg: Color(0xFFEFF6FF),
+
+    // Input colors
+    inputBackground: Color(0xFF1F2937),
+    inputBorder: Color(0xFF374151),
+    inputPlaceholder: Color(0xFF6B7280),
+    inputFocusBorder: Color(0xFF9AC444),
+
+    // Icon colors
+    iconPrimary: Color(0xFFF9FAFB),
+    iconSecondary: Color(0xFFD1D5DB),
+    iconDisabled: Color(0xFF6B7280),
+
+    // Button colors
+    buttonPrimaryBg: Color(0xFF9AC444),
+    buttonPrimaryText: Color(0xFFFFFFFF),
+    buttonSecondaryBg: Color(0xFF374151),
+    buttonSecondaryText: Color(0xFFF9FAFB),
+    buttonDisabledBg: Color(0xFF374151),
+    buttonDisabledText: Color(0xFF6B7280),
+
+    // Card colors
+    cardBackground: Color(0xFF1F2937),
+    cardBorder: Color(0xFF374151),
+    cardShadow: [
+      BoxShadow(
+        color: Color(0x1A000000),
+        blurRadius: 12,
+        offset: Offset(0, 2),
+        spreadRadius: 0,
+      ),
+    ],
+    buttonShadow: [
+      BoxShadow(
+        color: Color(0x4D9AC444),
+        blurRadius: 16,
+        offset: Offset(0, 4),
+      ),
+    ],
+    // Overlay colors
+    overlay: Color(0x80000000),
+    scrim: Color(0xE6000000),
+  );
+}

@@ -1,0 +1,566 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:zenfoo_partner/theme/app_color_scheme.dart';
+import 'package:zenfoo_partner/theme/theme_provider.dart';
+import 'package:zenfoo_partner/utils/app_dimensions.dart';
+import 'package:zenfoo_partner/utils/app_fonts.dart';
+import 'package:zenfoo_partner/utils/app_images.dart';
+import 'package:zenfoo_partner/utils/appHeader.dart';
+import 'package:zenfoo_partner/view/custom_widgets/customCard.dart';
+import 'package:zenfoo_partner/view/custom_widgets/custom_button.dart';
+import 'package:zenfoo_partner/view/custom_widgets/custom_image_icon.dart';
+import 'package:zenfoo_partner/view/custom_widgets/custom_scaffold.dart';
+import 'package:zenfoo_partner/view/screens/home/screens/offer_detail_screen.dart';
+import 'package:zenfoo_partner/view/screens/home/widgets/home_banner_carousel.dart';
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = context.watch<ThemeProvider>().colorScheme;
+
+    return CustomScaffold(
+      backgroundColor: colorScheme.background,
+      body: Column(
+        children: [
+          /// APP HEADER
+          AppHeader(
+            label: "DASHBOARD",
+            title: "Home",
+            showBackButton: false,
+            showExitButton: false,
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _statusToggle(textTheme, colorScheme),
+                const SizedBox(width: 12),
+                const CustomImageIcon(imagePath: AppImages.headPhone),
+                const SizedBox(width: 12),
+                const CustomImageIcon(imagePath: AppImages.bulb),
+                const SizedBox(width: 12),
+                CircleAvatar(
+                  backgroundColor: colorScheme.surface,
+                  radius: 18,
+                  backgroundImage: const AssetImage(AppImages.profilePerson),
+                ),
+                const SizedBox(width: 4),
+              ],
+            ),
+          ),
+
+          /// BODY
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                children: [
+                  const SizedBox(height: 24),
+
+                  /// TODAY'S PROGRESS CARD
+                  _todaysProgressCard(context, colorScheme, textTheme),
+
+                  const SizedBox(height: 24),
+
+                  /// OFFERS SECTION
+                  _offersSection(context, colorScheme, textTheme),
+
+                  const SizedBox(height: 24),
+
+                  /// BANNER CAROUSEL 1
+                  HomeBannerCarousel(
+                    imagePaths: List.generate(5, (index) => AppImages.banner),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  /// BANNER CAROUSEL 2
+                  HomeBannerCarousel(
+                    imagePaths: List.generate(5, (index) => AppImages.banner),
+                  ),
+
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _todaysProgressCard(
+      BuildContext context, AppColorScheme colorScheme, TextTheme textTheme) {
+    Widget statBlock(
+        String value, String label, CrossAxisAlignment crossAxisAlignment) {
+      return Column(
+        crossAxisAlignment: crossAxisAlignment,
+        children: [
+          Text(
+            value,
+            style: GoogleFonts.inter(
+              color: colorScheme.textPrimary,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              letterSpacing: -0.55,
+              height: 1.02,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            label,
+            style: GoogleFonts.inter(
+              color: colorScheme.textSecondary,
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              letterSpacing: -0.55,
+              height: 1.03,
+            ),
+          ),
+          const SizedBox(height: 6),
+        ],
+      );
+    }
+
+    return CustomCard(
+      padding: EdgeInsets.all(AppDimensions.getWidth(4)),
+      margin: EdgeInsets.all(AppDimensions.getWidth(0)),
+      backgroundColor: colorScheme.surfaceContainer,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          /// HEADER PILL
+          Container(
+            height: 40,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: colorScheme.surfaceElevated,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Today's Progress",
+              style: GoogleFonts.inter(
+                color: colorScheme.textPrimary,
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                letterSpacing: -0.3,
+                height: 1.2,
+              ),
+            ),
+          ),
+          SizedBox(height: AppDimensions.getHeight(2)),
+
+          /// ROW 1
+          Row(
+            children: [
+              statBlock("20", "Orders", CrossAxisAlignment.start),
+            ],
+          ),
+
+          SizedBox(height: AppDimensions.getHeight(1)),
+
+          /// ROW 2
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              statBlock("₹1,986", "Earnings", CrossAxisAlignment.start),
+              statBlock("30 Kms", "Trips", CrossAxisAlignment.end)
+            ],
+          ),
+          SizedBox(height: AppDimensions.getHeight(1)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              statBlock("00", "Gigs History", CrossAxisAlignment.start),
+              statBlock("00:00:00", "Login Hours", CrossAxisAlignment.end),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// 🔹 STATUS TOGGLE (OFFLINE / ONLINE)
+  Widget _statusToggle(TextTheme textTheme, AppColorScheme colorScheme) {
+    return Container(
+      height: 36,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: colorScheme.error,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+            decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Text(
+              "Off",
+              style: textTheme.bodySmall?.copyWith(color: colorScheme.error),
+            ),
+          ),
+          const SizedBox(width: 8),
+          Text(
+            "Offline",
+            style: textTheme.bodySmall?.copyWith(color: colorScheme.surface),
+          ),
+          const SizedBox(width: 8),
+        ],
+      ),
+    );
+  }
+
+  Widget _offersSection(
+      BuildContext context, colorScheme, TextTheme textTheme) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        /// HEADER
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Offers",
+              style: TextStyle(
+                color: colorScheme.textPrimary,
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.3,
+                height: 1.2,
+              ),
+            ),
+            Text(
+              "View all",
+              style: TextStyle(
+                color: colorScheme.primary,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                letterSpacing: -0.3,
+              ),
+            ),
+          ],
+        ),
+
+        const SizedBox(height: 12),
+
+        /// OFFER CARD
+        Container(
+          padding: EdgeInsets.symmetric(
+              vertical: AppDimensions.getHeight(1),
+              horizontal: AppDimensions.getWidth(3)),
+          decoration: BoxDecoration(
+              color: colorScheme.surface,
+              borderRadius: BorderRadius.circular(16),
+              border:
+                  Border.all(color: colorScheme.border.withValues(alpha: 0.3))),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              /// BLACK OFFER BANNER
+              Container(
+                padding: EdgeInsets.all(AppDimensions.getWidth(3)),
+                decoration: BoxDecoration(
+                  color: colorScheme.textPrimary,
+                  borderRadius: BorderRadius.circular(14),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    /// LEFT INFO
+                    Column(
+                      children: [
+                        Text(
+                          "15 JAN",
+                          style: TextStyle(
+                            color: colorScheme.surface,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.3,
+                            fontFamily: AppFonts.semiBold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: AppDimensions.getSize(5),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          decoration: BoxDecoration(
+                              color: colorScheme.surface,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: colorScheme.surface,
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        width: 1, color: colorScheme.success)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Container(
+                                    height: 8,
+                                    width: 8,
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.success,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: AppDimensions.getSize(10),
+                              ),
+                              Text(
+                                'Live',
+                                style: TextStyle(
+                                  color: colorScheme.success,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: -0.3,
+                                  fontFamily: AppFonts.semiBold,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        /// DATE
+
+                        SizedBox(height: AppDimensions.getHeight(.1)),
+
+                        /// TITLE
+                        Text(
+                          "Sankranti Festival Offers",
+                          style: TextStyle(
+                            color: colorScheme.surface,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w600,
+                            letterSpacing: -0.3,
+                            height: 1.3,
+                          ),
+                        ),
+                        SizedBox(height: AppDimensions.getHeight(1)),
+                        Text(
+                          "1 PM to 6 PM",
+                          style: TextStyle(
+                            color: colorScheme.surface,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            letterSpacing: -0.3,
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          "₹300",
+                          style: TextStyle(
+                            color: colorScheme.surface,
+                            fontSize: 22,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: -0.55,
+                            height: 1.2,
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          "Extra",
+                          style: TextStyle(
+                            color: colorScheme.surface,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: -0.3,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 14),
+
+              /// INCENTIVES
+              Text(
+                "Incentives",
+                style: TextStyle(
+                  color: colorScheme.textPrimary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.3,
+                  height: 1.2,
+                ),
+              ),
+
+              const SizedBox(height: 10),
+
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ImageIcon(
+                        const AssetImage(AppImages.bike),
+                        size: 28,
+                        color: colorScheme.textPrimary,
+                      ),
+                      Container(
+                        height: 4,
+                        width: AppDimensions.getWidth(30),
+                        decoration: BoxDecoration(
+                          color: colorScheme.border,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      const SizedBox(height: 25)
+                    ],
+                  ),
+                  Expanded(
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        Container(
+                          height: 4,
+                          decoration: BoxDecoration(
+                            color: colorScheme.textPrimary,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: List.generate(
+                            4,
+                            (_) => Container(
+                              height: 18,
+                              width: 18,
+                              decoration: BoxDecoration(
+                                color: colorScheme.textPrimary,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.lock,
+                                size: 10,
+                                color: colorScheme.surface,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 10),
+
+              /// EARNINGS LABELS
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text("₹800",
+                      style: TextStyle(
+                          fontSize: 12, color: colorScheme.textSecondary)),
+                  Text("₹950",
+                      style: TextStyle(
+                          fontSize: 12, color: colorScheme.textSecondary)),
+                  Text("₹1200",
+                      style: TextStyle(
+                          fontSize: 12, color: colorScheme.textSecondary)),
+                  Text("₹1500",
+                      style: TextStyle(
+                          fontSize: 12, color: colorScheme.textSecondary)),
+                ],
+              ),
+
+              const SizedBox(height: 14),
+
+              /// CONDITIONS
+              Text(
+                "Conditions",
+                style: TextStyle(
+                  color: colorScheme.textPrimary,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  letterSpacing: -0.3,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("• ",
+                      style: TextStyle(color: colorScheme.textSecondary)),
+                  Expanded(
+                    child: Text(
+                      "Login is mandatory 1 PM to 6 PM.",
+                      style: TextStyle(
+                          fontSize: 12, color: colorScheme.textSecondary),
+                    ),
+                  ),
+                ],
+              ),
+
+              const SizedBox(height: 14),
+
+              /// VIEW DETAILS BUTTON
+              CustomButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OfferDetailsScreen()));
+                },
+                boxShadow: const [BoxShadow()],
+                elevation: 0,
+                height: 44,
+                borderRadius: 120,
+                backgroundColor: colorScheme.border.withValues(alpha: 0.3),
+                child: Center(
+                  child: Text(
+                    "View Details",
+                    style: TextStyle(
+                      color: colorScheme.textPrimary,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: -0.3,
+                      height: 1.2,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// 🔹 ROUND ICON
+  Widget _circleIcon(IconData icon, colorScheme) {
+    return Container(
+      margin: const EdgeInsets.only(right: 10),
+      height: 36,
+      width: 36,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: colorScheme.surface,
+      ),
+      child: Icon(icon, size: 18, color: colorScheme.textPrimary),
+    );
+  }
+}
