@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(flutter analyze:*)",
+      "Bash(dart analyze:*)",
+      "Bash(Select-Object -First 30)",
+      "Bash(flutter build:*)",
+      "Bash(python3:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)",
+      "Bash(flutter clean:*)",
+      "Bash(flutter pub get:*)",
+      "Bash(flutter screenshot --type device --out dev_explore_logo5.png)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

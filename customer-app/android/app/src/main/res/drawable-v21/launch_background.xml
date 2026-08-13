@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Plain background only: the logo is shown by the Flutter splash screen
+         (lib/screens/splashScreen.dart) so it is not drawn twice on launch. -->
+    <item android:drawable="@color/splash_bg"/>
+</layer-list>

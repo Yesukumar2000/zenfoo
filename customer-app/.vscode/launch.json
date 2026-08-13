@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "name": "zenfoo-customer",
+            "request": "launch",
+            "type": "dart"
+        },
+        {
+            "name": "zenfoo-customer (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "zenfoo-customer (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
+        {
+            "name": "zenfoo-customer (release mode - no verbose)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release",
+            "args": []
+        },
+        {
+            "name": "Run Tests (Debug)",
+            "request": "launch",
+            "type": "dart",
+            "program": "test",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Run Tests (Release)",
+            "request": "launch",
+            "type": "dart",
+            "program": "test",
+            "cwd": "${workspaceFolder}",
+            "flutterMode": "release"
+        },
+        {
+            "name": "Run Integration Tests (Release)",
+            "request": "launch",
+            "type": "dart",
+            "program": "integration_test",
+            "cwd": "${workspaceFolder}",
+            "flutterMode": "release"
+        }
+    ]
+}

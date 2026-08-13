@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Fully transparent icon for the Android 12+ system splash screen.
+     Android 12+ always draws a splash icon (falling back to the launcher icon
+     if none is set), so a transparent one is used to keep the launch screen
+     blank and let the Flutter splash show the logo just once. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent"/>
+    <size android:width="288dp" android:height="288dp"/>
+</shape>

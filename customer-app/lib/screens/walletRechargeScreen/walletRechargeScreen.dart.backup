@@ -1,0 +1,564 @@
+import 'package:project/helper/utils/generalImports.dart';
+import 'package:project/helper/utils/keyboardOverlay.dart';
+import 'package:project/helper/generalWidgets/appHeader.dart';
+import 'package:project/provider/themeProvider.dart' as app_theme;
+import 'package:project/helper/styles/appColorScheme.dart';
+
+class WalletRechargeScreen extends StatefulWidget {
+  const WalletRechargeScreen({super.key});
+
+  @override
+  State<WalletRechargeScreen> createState() => _WalletRechargeScreenState();
+}
+
+class _WalletRechargeScreenState extends State<WalletRechargeScreen> {
+  final TextEditingController rechargeAmount = TextEditingController();
+  final FocusNode focusNode = FocusNode();
+  final List<int> _presets = [100, 200, 500, 1000, 2000, 5000];
+  int? _selectedPreset;
+
+  @override
+  void initState() {
+    focusNode.addListener(() {
+      bool hasFocus = focusNode.hasFocus;
+      if (hasFocus) {
+        KeyboardOverlay.showOverlay(context);
+      } else {
+        KeyboardOverlay.removeOverlay();
+      }
+    });
+    Future.delayed(Duration.zero).then((value) {
+      context
+          .read<PaymentMethodsProvider>()
+          .getPaymentMethods(context: context, from: "wallet_recharge");
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    rechargeAmount.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  void _onPresetTap(int value) {
+    setState(() {
+      _selectedPreset = value;
+      rechargeAmount.text = value.toString();
+      focusNode.unfocus();
+    });
+  }
+
+  void _onCustomAmountChanged(String value) {
+    setState(() {
+      _selectedPreset = null; // Deselect presets when typing custom amount
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    
+    return Scaffold(
+      backgroundColor: const Color(0xFFFAFAFA),
+      body: Consumer<PaymentMethodsProvider>(
+        builder: (context, paymentMethodsProvider, _) {
+          return Consumer<WalletRechargeProvider>(
+            builder: (context, walletRechargeProvider, _) {
+              if (paymentMethodsProvider.paymentMethodsState ==
+                  PaymentMethodsState.loading) {
+                return _buildLoadingState();
+              } else if (paymentMethodsProvider.paymentMethodsState ==
+                  PaymentMethodsState.loaded) {
+                if (paymentMethodsProvider.selectedPaymentMethod.isNotEmpty) {
+                  return CustomScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    slivers: [
+                      _buildSliverAppBar(),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 24),
+                              // Current Balance Card
+                              _buildBalanceCard(),
+                              const SizedBox(height: 32),
+
+                              // Quick Add Section
+                              Text(
+                                "Quick Add",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF111827),
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildPresetChips(),
+                              const SizedBox(height: 32),
+
+                              // Custom Amount Section
+                              Text(
+                                "Or Enter Custom Amount",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF111827),
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              _buildAmountInput(),
+                              const SizedBox(height: 32),
+
+                              // Payment Methods Section
+                              Text(
+                                "Select Payment Method",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: const Color(0xFF111827),
+                                  letterSpacing: -0.2,
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                            ],
+                          ),
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: PaymentMethodsWidget(
+                          isPaymentUnderProcessing: walletRechargeProvider.isPaymentUnderProcessing,
+                        ),
+                      ),
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: WalletRechargeButtonWidget(
+                            context: context,
+                            rechargeAmount: rechargeAmount,
+                          ),
+                        ),
+                      ),
+                      const SliverToBoxAdapter(child: SizedBox(height: 16)),
+                    ],
+                  );
+                } else {
+                  return _buildEmptyState();
+                }
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  SliverAppBar _buildSliverAppBar() {
+    return SliverAppBar(
+      pinned: true,
+      floating: true,
+      elevation: 0,
+      automaticallyImplyLeading: false,
+      toolbarHeight: 72,
+      backgroundColor: Colors.transparent,
+      flexibleSpace: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF9AC444),
+              Color(0xFFFAFAFA),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          bottom: false,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            child: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    HapticFeedback.lightImpact();
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.25),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                        color: Colors.black.withValues(alpha: 0.3),
+                        width: 1,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.arrow_back_ios_new_rounded,
+                        color: Colors.black,
+                        size: 18,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CustomTextLabel(
+                        jsonKey: walletRechargeLabel,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF111827),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          height: 1.2,
+                          letterSpacing: -0.3,
+                        ),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        "Add money to your wallet",
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF6B7280),
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          height: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBalanceCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      decoration: ShapeDecoration(
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFF9AC444),
+            Color(0xFF7DA635),
+          ],
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        shadows: [
+          BoxShadow(
+            color: const Color(0xFF9AC444).withValues(alpha: 0.3),
+            blurRadius: 20,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Current Wallet Balance",
+            style: GoogleFonts.inter(
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+              color: Colors.white.withValues(alpha: 0.9),
+              letterSpacing: 0.5,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Consumer<SessionManager>(
+            builder: (_, sessionManager, __) {
+              final bal = "${sessionManager.getData(SessionManager.keyWalletBalance)}".currency;
+              return Text(
+                bal,
+                style: GoogleFonts.inter(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  height: 1.1,
+                  letterSpacing: -0.5,
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPresetChips() {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: _presets.map((value) {
+        final isSelected = _selectedPreset == value;
+        return GestureDetector(
+          onTap: () {
+            HapticFeedback.lightImpact();
+            _onPresetTap(value);
+          },
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+            decoration: BoxDecoration(
+              color: isSelected ? const Color(0xFF9AC444) : Colors.white,
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: isSelected ? const Color(0xFF9AC444) : const Color(0xFFE0E0E0),
+                width: 1.5,
+              ),
+              boxShadow: isSelected
+                  ? [
+                      BoxShadow(
+                        color: const Color(0xFF9AC444).withValues(alpha: 0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ]
+                  : [],
+            ),
+            child: Text(
+              "₹$value",
+              style: GoogleFonts.inter(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: isSelected ? Colors.white : const Color(0xFF6B7280),
+                letterSpacing: -0.2,
+              ),
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildAmountInput() {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: focusNode.hasFocus ? const Color(0xFF9AC444) : const Color(0xFFE0E0E0),
+          width: focusNode.hasFocus ? 2 : 1,
+        ),
+        boxShadow: [
+          if (focusNode.hasFocus)
+            BoxShadow(
+              color: const Color(0xFF9AC444).withValues(alpha: 0.15),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+        ],
+      ),
+      child: TextField(
+        controller: rechargeAmount,
+        focusNode: Platform.isIOS ? focusNode : FocusNode(),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        textAlign: TextAlign.center,
+        onChanged: _onCustomAmountChanged,
+        style: GoogleFonts.inter(
+          fontSize: 32,
+          fontWeight: FontWeight.w800,
+          color: const Color(0xFF111827),
+          letterSpacing: -0.5,
+        ),
+        decoration: InputDecoration(
+          hintText: "₹100",
+          hintStyle: GoogleFonts.inter(
+            fontSize: 32,
+            fontWeight: FontWeight.w800,
+            color: const Color(0xFFE0E0E0),
+            letterSpacing: -0.5,
+          ),
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 24),
+            child: Text(
+              "₹",
+              style: GoogleFonts.inter(
+                fontSize: 32,
+                fontWeight: FontWeight.w800,
+                color: const Color(0xFF9AC444),
+                letterSpacing: -0.5,
+              ),
+            ),
+          ),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLoadingState() {
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        _buildSliverAppBar(),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
+              children: [
+                CustomShimmer(
+                  height: 120,
+                  width: double.infinity,
+                  borderRadius: 20,
+                ),
+                const SizedBox(height: 32),
+                CustomShimmer(
+                  height: 16,
+                  width: 100,
+                  borderRadius: 8,
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  children: List.generate(
+                    3,
+                    (index) => Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: index < 2 ? 12 : 0),
+                        child: CustomShimmer(
+                          height: 50,
+                          width: double.infinity,
+                          borderRadius: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                CustomShimmer(
+                  height: 16,
+                  width: 150,
+                  borderRadius: 8,
+                ),
+                const SizedBox(height: 16),
+                CustomShimmer(
+                  height: 70,
+                  width: double.infinity,
+                  borderRadius: 16,
+                ),
+                const SizedBox(height: 32),
+                CustomShimmer(
+                  height: 16,
+                  width: 180,
+                  borderRadius: 8,
+                ),
+                const SizedBox(height: 16),
+                CustomShimmer(
+                  height: 200,
+                  width: double.infinity,
+                  borderRadius: 16,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
+      slivers: [
+        _buildSliverAppBar(),
+        SliverFillRemaining(
+          hasScrollBody: false,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(32),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 160,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF5F9E8),
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: const Color(0xFFE8F5E9),
+                        width: 8,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.payment_outlined,
+                        size: 72,
+                        color: Color(0xFF9AC444),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 32),
+                  Text(
+                    getTranslatedValue(context, emptyPaymentMethodsMessageLabel),
+                    style: GoogleFonts.inter(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: const Color(0xFF111827),
+                      letterSpacing: -0.3,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    getTranslatedValue(context, emptyPaymentMethodsDescriptionLabel),
+                    style: GoogleFonts.inter(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: const Color(0xFF6B7280),
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 54,
+                    child: gradientBtnWidget(
+                      context,
+                      16,
+                      otherWidgets: Center(
+                        child: CustomTextLabel(
+                          jsonKey: goBackLabel,
+                          style: GoogleFonts.inter(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: -0.2,
+                          ),
+                        ),
+                      ),
+                      callback: () {
+                        HapticFeedback.lightImpact();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
