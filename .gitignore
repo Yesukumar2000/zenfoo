@@ -1,0 +1,37 @@
+# ─── zenfoo monorepo: repo-wide ignores ───────────────────────────────
+# Per-project .gitignore files still apply inside each subfolder.
+
+# Reinstallable dependencies — rebuilt from composer.lock / package.json
+/admin-panel/vendor/
+node_modules/
+
+# Build output
+build/
+.dart_tool/
+
+# OS / archive junk
+__MACOSX/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Local environment (never commit real .env — .env.example is tracked)
+.env
+
+# ─── Android signing material — NEVER commit (repo is public) ─────────
+# Keep these local. See key.properties.example for the expected shape.
+*.jks
+*.jks.*
+*.keystore
+key.properties
+**/android/keystore/
+
+# ─── Build artifacts ──────────────────────────────────────────────────
+*.ipa
+*.apk
+*.aab
+# Xcode export folders, e.g. "ios/Runner 2026-01-31 12-39-14/"
+**/ios/Runner\ *//

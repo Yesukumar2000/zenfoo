@@ -1,0 +1,11 @@
+# Template for android/key.properties — copy into the app you are building:
+#   partner-app/android/key.properties
+#   customer-app/android/key.properties
+#
+# The real file and the .jks it points at are gitignored on purpose.
+# Get the actual keystore and passwords from the project owner; never commit them.
+
+storePassword=<release keystore password>
+keyPassword=<release key password>
+keyAlias=<key alias>
+storeFile=../keystore/<name>.jks
