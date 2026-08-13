@@ -1,0 +1,96 @@
+# Flutter/Dart
+.dart_tool/*
+.packages
+.pub-cache/
+.pub/
+build/
+coverage/
+flutter_export_environment.sh
+
+# Generated plugin registrant
+generated_plugin_registrant.dart
+
+# IntelliJ / Android Studio
+*.iml
+.idea/
+*.ipr
+*.iws
+
+# VS Code
+.vscode/
+.history/
+
+# macOS
+Flutter/ephemeral/
+Pods/
+macos/Flutter/ephemeral/
+macos/Pods/
+macos/Runner/GeneratedPluginRegistrant.swift
+*.xcworkspace
+*.xcuserdata/
+*.xcuserstate
+*.lock
+DerivedData/
+
+# iOS
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+ios/Carthage/
+ios/Runner/GeneratedPluginRegistrant.*
+ios/Runner.xcworkspace/
+ios/.generated/
+*.xcuserstate
+*.xcuserdata/
+
+# Android
+android/.gradle/
+android/.idea/
+android/local.properties
+android/key.properties
+android/app/*.keystore
+android/app/*.jks
+android/app/.cxx
+android/captures/
+android/gradle/
+android/app/build/
+
+# Linux
+linux/flutter/generated_plugin_registrant.cc
+linux/flutter/generated_plugin_registrant.h
+linux/CMakeFiles/
+linux/Makefile
+linux/cmake_install.cmake
+
+# Windows
+windows/flutter/generated_plugin_registrant.cc
+windows/flutter/generated_plugin_registrant.h
+windows/CMakeFiles/
+windows/Makefile
+windows/cmake_install.cmake
+
+# Web
+web/.dart_tool/
+
+# Firebase
+.google/
+firebase.json
+firebase_app_id_file.json
+
+# Logs
+*.log
+logs/
+
+# Environment / Credentials
+.env
+.env.*
+*.pem
+*.p12
+
+# Misc
+*.lock
+*.tmp
+*.DS_Store
+
+android/app/.cxx/*

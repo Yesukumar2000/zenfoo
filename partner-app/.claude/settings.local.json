@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"/c/Users/APPLE/AppData/Local/Programs/Microsoft VS Code/bin/code\":*)",
+      "Bash(npm show:*)",
+      "Bash(grep:*)",
+      "Bash(node:*)",
+      "Bash(npm update:*)",
+      "Bash(claude:*)",
+      "Bash(flutter analyze:*)",
+      "Bash(flutter pub get)",
+      "Bash(adb logcat -d)"
+    ]
+  }
+}

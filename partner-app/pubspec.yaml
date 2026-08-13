@@ -1,0 +1,142 @@
+name: project
+description: "A new Flutter project."
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+# TODO CHANGE VERSION HERE
+
+version: 1.0.18+51
+
+environment:
+  sdk: ">=3.3.3 <4.0.0"
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.2.3
+  connectivity_plus:
+  provider: ^6.1.2
+  flutter_svg: ^2.0.10+1
+  shimmer: ^3.0.0
+  url_launcher: ^6.3.0
+  firebase_messaging: ^16.1.0
+  firebase_crashlytics: ^5.0.7
+  video_player: ^2.9.2
+  fl_chart: ^1.1.1 #1.0.0
+  file_picker: ^10.3.3 #any
+  path_provider: ^2.1.4
+  geolocator: ^14.0.0 #for user location
+  google_maps_flutter: ^2.2.1 #for map
+  geocoding: ^4.0.0
+  intl: ^0.20.2
+  awesome_notifications: ^0.10.1
+  image_cropper: ^11.0.0
+  # image_picker: ^1.0.7
+  permission_handler: ^12.0.1 #12.0.0
+  dotted_border: ^3.0.1
+  open_file: ^3.5.10 #open_filex: ^4.4.0
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  #google_api_headers: ^4.1.2
+  device_info_plus: ^12.1.0
+  google_fonts: ^6.2.1
+  photo_view: ^0.15.0
+  quill_html_editor: ^2.2.8
+  rxdart: ^0.28.0
+  external_path: ^2.0.1
+  flutter_polyline_points: ^2.1.0 #^3.1.0
+  cached_network_image: ^3.3.1
+  mime: ^2.0.0
+  dio: ^5.8.0+1
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.7
+  velocity_x: ^4.3.1
+  flutter_otp_text_field: ^1.5.1+1
+  hugeicons: ^1.1.1
+  image_picker: ^1.1.2
+  flutter_html: ^3.0.0-beta.2
+  in_app_update: ^4.2.4
+  just_audio: ^0.9.36
+  cloud_firestore: ^6.1.1
+  sms_autofill: ^2.4.1
+  pinput: ^6.0.1
+  smart_auth: ^3.2.0
+  calendar_date_picker2: ^2.0.1
+  app_tracking_transparency: ^2.0.1
+  pdf: ^3.11.1
+  printing: ^5.13.3
+  print_bluetooth_thermal: ^1.1.1
+  signature: ^5.5.0
+
+dependency_overrides:
+  http: ^1.0.0
+  intl: ^0.19.0
+  #google_maps_flutter_ios: 2.5.2
+  file_picker:
+    git:
+      url: https://github.com/abdelaziz-mahdy/flutter_file_picker
+      ref: fix-flutter-3.27-compile-error
+  path_provider_foundation: 2.4.0
+  shared_preferences_foundation: 2.4.0
+  vector_math: ^2.1.4
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mockito: ^5.4.4
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/en.json
+    - assets/svg/
+    - assets/images/
+    - assets/mapTheme/
+    - assets/sounds/
+
+# App Icon Configuration
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/play_store.png"
+  min_sdk_android: 21
+  remove_alpha_ios: true
+  background_color_ios: "#9AC444"
+
+# Splash Screen Configuration
+# DISABLED: the app now shows only ONE splash - the Flutter SplashScreen
+# (lib/screens/splashScreen.dart). The native splash below was the
+# second/duplicate one. Kept here so it can be restored by uncommenting and
+# running: dart run flutter_native_splash:create
+# flutter_native_splash:
+#   color: "#9AC444"
+#   image: assets/images/play_store.png
+#   android_12:
+#     image: assets/images/play_store.png
+#     color: "#9AC444"
+#   ios: true
+#   android: true
+#   fullscreen: true
