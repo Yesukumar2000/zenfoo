@@ -1,0 +1,23 @@
+{
+  "category_groups": [
+    {
+      "id": 18,                    // STORE ID
+      "name": "Mutton",            // STORE NAME
+      "image": ".../stores/...",
+      "subCategoryGroups": [
+        {
+          "id": 90,              // ← CATEGORY ID (actual subcategory!)
+          "name": "Mutton",
+          "image": ".../categories/...",
+          "seller_id": null
+        },
+        {
+          "id": 120,
+          "name": "Mutton Brain",
+          "image": ".../categories/...",
+          "seller_id": null
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+    "version": "2.1.2",
+    "archive": "RELEASE-2.12.zip",
+   "description": "+ [Added] Self pickup order functionality <br/> + [Improvements] Low stock and return and other missing notification add <br/> +  [Improvements] Return flow improvements <br/> + [Fix] Fix deep link issue <br/> + [Updated] Updated App codes to the latest Flutter version (3.35.5)"
+}

@@ -1,0 +1,257 @@
+=========================================================
+  BULK UPLOAD EXCEL - TEST CASES CHECKLIST
+=========================================================
+
+------------------------------------------------------------
+SECTION 1: VALID CASES (should upload successfully)
+------------------------------------------------------------
+
+[ ] 1. Packet - 1 variant, Limited stock, Status=Active
+        Row 6: Name=Rice Packet | Type=packet | Unlimited=No | Meas=250 | Price=50 | DiscPrice=0 | Stock=100 | Unit=gram | Status=Active
+
+[ ] 2. Packet - 3 variants, Unlimited stock (Stock col = 0)
+        Row 6: Name=Biscuit | Type=packet | Unlimited=Yes | Meas=100 | Price=20 | DiscPrice=0 | Stock=0 | Unit=gram | Status=Active
+        Row 7: (blank A) | Meas=250 | Price=45 | DiscPrice=40 | Stock=0 | Unit=gram | Status=Active
+        Row 8: (blank A) | Meas=500 | Price=80 | DiscPrice=75 | Stock=0 | Unit=gram | Status=Sold Out
+
+[ ] 3. Loose - 1 variant, Limited stock, Status=Active
+        Row 6: Name=Loose Rice | Type=loose | Unlimited=No | Meas=100 | Price=10 | DiscPrice=0 | Stock=500 | Unit=gram | Status=Active
+
+[ ] 4. Loose - 2 variants, different units per row
+        Row 6: Name=Dal | Type=loose | Unlimited=No | Meas=100 | Price=15 | DiscPrice=0 | Stock=200 | Unit=gram | Status=Active
+        Row 7: (blank A) | Meas=1 | Price=130 | DiscPrice=120 | Stock=50 | Unit=kg | Status=Active
+
+[ ] 5. Loose - 2 variants, one Active + one Sold Out
+        Row 6: Name=Loose Wheat | Type=loose | Unlimited=No | Meas=250 | Price=30 | DiscPrice=0 | Stock=100 | Unit=gram | Status=Active
+        Row 7: (blank A) | Meas=500 | Price=55 | DiscPrice=50 | Stock=0 | Unit=gram | Status=Sold Out
+
+[ ] 6. Packet with Discounted Price filled correctly
+        Row 6: Name=Chips | Type=packet | Unlimited=No | Meas=50 | Price=20 | DiscPrice=15 | Stock=200 | Unit=gram | Status=Active
+
+
+------------------------------------------------------------
+SECTION 2: TYPE COLUMN ERRORS
+------------------------------------------------------------
+
+[ ] 7. Type = "solid" (wrong value — not packet or loose)
+        Row 6: Name=Test | Type=solid | ...
+        Expected: Error — invalid type
+
+[ ] 8. Type = blank (empty)
+        Row 6: Name=Test | Type=(empty) | ...
+        Expected: Error — type is required
+
+
+------------------------------------------------------------
+SECTION 3: MEASUREMENT ERRORS (Col H)
+------------------------------------------------------------
+
+[ ] 9. Measurement = 0
+        Row 6: Name=Test | Type=packet | Meas=0 | Price=50 | Stock=100 | Unit=gram | Status=Active
+        Expected: Error — measurement must be greater than 0
+
+[ ] 10. Measurement = -5 (negative)
+        Expected: Error — invalid/numeric validation
+
+[ ] 11. Measurement = "abc" (non-numeric)
+        Expected: Error — must be numeric
+
+[ ] 12. Measurement = blank (empty)
+        Expected: Error — measurement is required
+
+[ ] 13. Duplicate measurement — same product, same measurement twice
+        Row 6: Name=Rice | Type=packet | Meas=250 | Price=50 | Stock=100 | Unit=gram | Status=Active
+        Row 7: (blank A) | Meas=250 | Price=60 | Stock=80 | Unit=gram | Status=Active
+        Expected: Error — duplicate variation
+
+
+------------------------------------------------------------
+SECTION 4: PRICE ERRORS (Col I)
+------------------------------------------------------------
+
+[ ] 14. Price = 0
+        Expected: Check if 0 is allowed or throws error
+
+[ ] 15. Price = blank (empty)
+        Expected: Error — price is required
+
+[ ] 16. Price = "abc" (non-numeric)
+        Expected: Error — must be numeric
+
+[ ] 17. Price = -50 (negative)
+        Expected: Error — invalid value
+
+
+------------------------------------------------------------
+SECTION 5: DISCOUNTED PRICE ERRORS (Col J)
+------------------------------------------------------------
+
+[ ] 18. Discounted Price >= Actual Price
+        Row 6: Name=Test | Price=50 | DiscPrice=60 | ...
+        Expected: Error — discounted price must be less than actual price
+
+[ ] 19. Discounted Price = same as Actual Price
+        Row 6: Name=Test | Price=50 | DiscPrice=50 | ...
+        Expected: Error — must be strictly less than price
+
+[ ] 20. Discounted Price = negative value
+        Expected: Error — invalid value
+
+
+------------------------------------------------------------
+SECTION 6: STOCK ERRORS (Col K)
+------------------------------------------------------------
+
+[ ] 21. Stock = 0 when Unlimited=No and Status=Active
+        Row 6: Name=Test | Unlimited=No | Stock=0 | Status=Active
+        Expected: Error — stock must be > 0 when limited and active
+
+[ ] 22. Stock = blank when Unlimited=No
+        Row 6: Name=Test | Unlimited=No | Stock=(empty) | Status=Active
+        Expected: Error — stock is required
+
+[ ] 23. Stock = -10 (negative)
+        Expected: Error — invalid value
+
+[ ] 24. Stock = "abc" (non-numeric)
+        Expected: Error — must be numeric
+
+[ ] 25. Stock = 0 when Unlimited=No and Status=Sold Out
+        Row 6: Name=Test | Unlimited=No | Stock=0 | Status=Sold Out
+        Expected: Should be ALLOWED (sold out = 0 stock is valid)
+
+[ ] 26. Stock filled with value when Unlimited=Yes
+        Row 6: Name=Test | Unlimited=Yes | Stock=100 | Status=Active
+        Expected: Stock value should be ignored / saved as 0
+
+
+------------------------------------------------------------
+SECTION 7: UNIT ERRORS (Col L)
+------------------------------------------------------------
+
+[ ] 27. Unit = "xyz" (unit that doesn't exist in DB)
+        Expected: Error — unit not found / invalid unit
+
+[ ] 28. Unit = blank (empty)
+        Expected: Error — unit is required
+
+[ ] 29. Unit = "gram" (without short code format like "gram (gram)")
+        Test: check if "gram" alone is matched or needs exact format
+
+
+------------------------------------------------------------
+SECTION 8: STATUS ERRORS (Col M)
+------------------------------------------------------------
+
+[ ] 30. Status = "Available" (wrong — correct value is "Active")
+        Expected: Error — invalid status
+
+[ ] 31. Status = "Inactive" (not a valid value)
+        Expected: Error — invalid status
+
+[ ] 32. Status = "1" or "0" (numeric instead of text)
+        Expected: Error — invalid status text
+
+[ ] 33. Status = blank (empty)
+        Expected: Error — status is required
+
+
+------------------------------------------------------------
+SECTION 9: IS UNLIMITED STOCK ERRORS (Col G)
+------------------------------------------------------------
+
+[ ] 34. Is Unlimited = "YES" or "yes" (wrong case — correct is "Yes")
+        Expected: Check if case-sensitive or accepts any case
+
+[ ] 35. Is Unlimited = "1" or "0" (numeric instead of Yes/No)
+        Expected: Error or check behavior
+
+[ ] 36. Is Unlimited = blank (empty)
+        Expected: Error — is_unlimited_stock is required
+
+
+------------------------------------------------------------
+SECTION 10: CATEGORY ERRORS (Cols D / E)
+------------------------------------------------------------
+
+[ ] 37. Category = "FakeCategory" (category that doesn't exist in DB)
+        Expected: Error — category not found
+
+[ ] 38. Category = blank (empty)
+        Expected: Error — category is required
+
+[ ] 39. Sub Category = wrong name (mismatched with category)
+        Expected: Error — sub category not found
+
+
+------------------------------------------------------------
+SECTION 11: CONTINUATION ROW ISSUES
+------------------------------------------------------------
+
+[ ] 40. Continuation row has Product Name filled (treated as new product with no category)
+        Row 6: Name=Rice | Type=packet | (all fields filled)
+        Row 7: Name=Rice | Meas=500 | Price=90 | Stock=50 | Unit=gram | Status=Active
+        Expected: Row 7 treated as new product → category required error
+
+[ ] 41. Continuation row with all BLUE columns blank
+        Row 6: Name=Rice | (all filled)
+        Row 7: (blank A) | (all BLUE cols also blank)
+        Expected: Measurement / price required error
+
+[ ] 42. Fully blank row between two products
+        Row 6: (Product 1 data)
+        Row 7: (completely empty)
+        Row 8: (Product 2 data)
+        Expected: Should skip blank row or error gracefully
+
+[ ] 43. Continuation row with only Measurement filled (Price missing)
+        Row 7: (blank A) | Meas=500 | Price=(blank) | ...
+        Expected: Error — price is required
+
+
+------------------------------------------------------------
+SECTION 12: EDGE CASES
+------------------------------------------------------------
+
+[ ] 44. Product Name with special characters: "Rice & Dal (500g)!"
+        Expected: Should save or sanitize the name
+
+[ ] 45. Product Name with very long text (300+ characters)
+        Expected: DB column limit error or truncation
+
+[ ] 46. Same product name used twice in the same upload file
+        Row 6: Name=Rice | (full data)
+        Row 10: Name=Rice | (full data)
+        Expected: Both saved as separate products (same name allowed)
+
+[ ] 47. Upload file with 10+ products and 3 variants each (stress test)
+        Expected: All products saved correctly with correct row attribution
+
+[ ] 48. Mix of packet and loose products in the same file
+        Row 6: Name=Biscuit | Type=packet | ...
+        Row 8: Name=Dal | Type=loose | ...
+        Expected: Both handled correctly
+
+[ ] 49. Discounted Price = 0 (no discount)
+        Row 6: DiscPrice=0 | Price=50
+        Expected: Should be allowed (0 means no discount)
+
+[ ] 50. Measurement = decimal value (e.g., 0.5 or 1.25)
+        Row 6: Meas=0.5 | Price=5 | Stock=100 | Unit=gram | Status=Active
+        Expected: Should be accepted (step="any")
+
+
+=========================================================
+  PRIORITY ORDER — TEST THESE FIRST
+=========================================================
+
+1.  [ ] Stock=0 + Unlimited=No + Status=Active          → must fail
+2.  [ ] Discounted Price >= Actual Price                → must fail
+3.  [ ] Unit = "xyz" (invalid)                          → must fail
+4.  [ ] Continuation row with blank Measurement         → must fail
+5.  [ ] Status = "Available" (wrong text)               → must fail
+6.  [ ] Valid packet + 2 variants                       → must succeed
+7.  [ ] Valid loose + 2 variants, different units       → must succeed
+8.  [ ] Unlimited=Yes + Stock=0 + Active                → must succeed
+
+=========================================================

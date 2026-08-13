@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Delivery Partners",
+    "slug": "title",
+    "icon": null,
+    "href": null
+  },
+  {
+    "name": "Dashboard",
+    "slug": "link",
+    "icon": "cil-speedometer",
+    "href": "/delivery-boy/dashboard"
+  },
+  {
+    "name": "Registrations",
+    "slug": "dropdown",
+    "icon": "cil-user-plus",
+    "href": "/delivery-boy/registrations",
+    "elements": [
+      {
+        "name": "Pending Verification",
+        "slug": "link",
+        "icon": "cil-clock",
+        "href": "/delivery-boy/registrations/pending"
+      },
+      {
+        "name": "All Registrations",
+        "slug": "link",
+        "icon": "cil-list",
+        "href": "/delivery-boy/registrations/all"
+      },
+      {
+        "name": "Rejected",
+        "slug": "link",
+        "icon": "cil-x-circle",
+        "href": "/delivery-boy/registrations/rejected"
+      }
+    ]
+  },
+  {
+    "name": "Partners",
+    "slug": "dropdown",
+    "icon": "cil-people",
+    "href": "/delivery-boy/partners",
+    "elements": [
+      {
+        "name": "All Partners",
+        "slug": "link",
+        "icon": "cil-user",
+        "href": "/delivery-boy/partners/all"
+      },
+      {
+        "name": "Active Partners",
+        "slug": "link",
+        "icon": "cil-check-circle",
+        "href": "/delivery-boy/partners/active"
+      },
+      {
+        "name": "Inactive Partners",
+        "slug": "link",
+        "icon": "cil-ban",
+        "href": "/delivery-boy/partners/inactive"
+      }
+    ]
+  },
+  {
+    "name": "Document Verification",
+    "slug": "link",
+    "icon": "cil-file",
+    "href": "/delivery-boy/documents/verification"
+  },
+  {
+    "name": "Gig Management",
+    "slug": "title",
+    "icon": null,
+    "href": null
+  },
+  {
+    "name": "Gigs",
+    "slug": "dropdown",
+    "icon": "cil-briefcase",
+    "href": "/delivery-boy/gigs",
+    "elements": [
+      {
+        "name": "All Gigs",
+        "slug": "link",
+        "icon": "cil-list",
+        "href": "/delivery-boy/gigs/list"
+      },
+      {
+        "name": "Create Gig",
+        "slug": "link",
+        "icon": "cil-plus",
+        "href": "/delivery-boy/gigs/create"
+      },
+      {
+        "name": "Gig Slots Calendar",
+        "slug": "link",
+        "icon": "cil-calendar",
+        "href": "/delivery-boy/gigs/calendar"
+      }
+    ]
+  },
+  {
+    "name": "Bookings",
+    "slug": "link",
+    "icon": "cil-bookmark",
+    "href": "/delivery-boy/gigs/bookings"
+  },
+  {
+    "name": "Tracking & Analytics",
+    "slug": "title",
+    "icon": null,
+    "href": null
+  },
+  {
+    "name": "Live Tracking",
+    "slug": "link",
+    "icon": "cil-location-pin",
+    "href": "/delivery-boy/tracking/live"
+  },
+  {
+    "name": "Session History",
+    "slug": "link",
+    "icon": "cil-history",
+    "href": "/delivery-boy/tracking/sessions"
+  },
+  {
+    "name": "Daily Reports",
+    "slug": "link",
+    "icon": "cil-chart-line",
+    "href": "/delivery-boy/tracking/reports"
+  },
+  {
+    "name": "Incentives",
+    "slug": "title",
+    "icon": null,
+    "href": null
+  },
+  {
+    "name": "Offers",
+    "slug": "dropdown",
+    "icon": "cil-gift",
+    "href": "/delivery-boy/offers",
+    "elements": [
+      {
+        "name": "All Offers",
+        "slug": "link",
+        "icon": "cil-list",
+        "href": "/delivery-boy/offers/list"
+      },
+      {
+        "name": "Create Offer",
+        "slug": "link",
+        "icon": "cil-plus",
+        "href": "/delivery-boy/offers/create"
+      },
+      {
+        "name": "Active Offers",
+        "slug": "link",
+        "icon": "cil-star",
+        "href": "/delivery-boy/offers/active"
+      }
+    ]
+  },
+  {
+    "name": "Partner Progress",
+    "slug": "link",
+    "icon": "cil-chart-pie",
+    "href": "/delivery-boy/offers/progress"
+  },
+  {
+    "name": "Payout Management",
+    "slug": "link",
+    "icon": "cil-dollar",
+    "href": "/delivery-boy/offers/payouts"
+  },
+  {
+    "name": "Pending Payouts",
+    "slug": "link",
+    "icon": "cil-money",
+    "href": "/delivery_boys/pending-payouts"
+  },
+  {
+    "name": "Settings",
+    "slug": "title",
+    "icon": null,
+    "href": null
+  },
+  {
+    "name": "Store Locations",
+    "slug": "link",
+    "icon": "cil-home",
+    "href": "/delivery-boy/settings/locations"
+  },
+  {
+    "name": "Vehicles",
+    "slug": "link",
+    "icon": "cil-truck",
+    "href": "/delivery-boy/settings/vehicles"
+  }
+]

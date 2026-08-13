@@ -1,0 +1,68 @@
+name: Laravel FTP Deploy
+
+on:
+  push:
+    branches:
+      - harshavardhan   # deploy only on this branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          submodules: false   # repo has no real submodules; never recurse
+
+      # 2️⃣ Setup PHP (needed for Laravel)
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, intl, bcmath
+
+      # 3️⃣ FTP Deploy only changed/new files
+      # Hostinger requires explicit FTPS (TLS over port 21). Plain `ftp`
+      # tends to hit "Timeout (control socket)" on the first connection
+      # because the server refuses to negotiate without TLS. `timeout`
+      # is bumped to 60s so the initial state-file sync doesn't bail.
+      - name: FTP Deploy to Shared Hosting
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.3
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          # Hostinger drops the control socket on long operations. The first
+          # full sync (incl. all public/js chunks) needs far more than 60s,
+          # so give it 10 minutes before bailing.
+          timeout: 600000
+          local-dir: ./           # root of repo
+          server-dir: /
+          state-name: ftp-deploy-state   # keeps track of uploaded files
+          log-level: standard
+          exclude: |
+            .git*
+            .git/**
+            .github/**
+            **/.git*
+            **/.github/**
+            node_modules/**
+            vendor/**
+            admin_panel/**
+            __MACOSX/**
+            tests/**
+            storage/**
+            public/storage/**
+            public/assets/**
+            .DS_Store
+            composer.lock
+            .env
+            .env.*
+            *.md
+            docker-compose.yml
+            Dockerfile
+            README.md

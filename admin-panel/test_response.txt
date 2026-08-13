@@ -1,0 +1,1 @@
+{"status":0,"message":"We are not available in your area","data":{"available_zones":[{"id":1,"name":"Hyderabad","state":"Telangana"},{"id":2,"name":"Kurnool","state":"Andhra Pradesh"}]}}

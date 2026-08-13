@@ -1,0 +1,12 @@
+/node_modules
+.env
+*.log
+storage/*
+storage/logs/*
+!storage/logs/.gitkeep
+/logs
+/log
+
+# macOS zip/extract artefacts — never real code
+__MACOSX/
+.DS_Store

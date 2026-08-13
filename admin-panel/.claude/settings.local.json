@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(php artisan tinker:*)",
+      "Bash(D:/Android/Sdk/platform-tools/adb.exe devices:*)",
+      "Bash(D:/Android/Sdk/platform-tools/adb.exe -s 3401988eea0e76ff exec-out screencap -p)",
+      "Bash(npm run *)",
+      "Bash(php -l app/Http/Controllers/API/Admin/OrderAnalyticsController.php)"
+    ]
+  }
+}

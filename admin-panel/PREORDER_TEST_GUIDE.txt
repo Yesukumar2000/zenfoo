@@ -1,0 +1,278 @@
+================================================================================
+   PRE-ORDER TESTING GUIDE - Multi-Store Items + Combo
+================================================================================
+
+📋 OVERVIEW
+-----------
+This guide helps you test pre-order functionality with:
+- 3 regular items from 3 different stores (12, 13, 14)
+- 1 combo spanning multiple admin-managed stores
+- User ID: 8
+
+================================================================================
+STEP 1: POPULATE CUSTOMER CART
+================================================================================
+
+Run this command to add items to User 8's cart:
+
+    php add_to_cart.php
+
+This script will:
+✅ Clear existing cart for User 8
+✅ Add 3 regular items:
+   - Store 12: Potatos (Variant ID: 5) - Qty: 1
+   - Store 13: Product Details (Variant ID: 18) - Qty: 1
+   - Store 14: Whole Chicken (Variant ID: 102) - Qty: 1
+✅ Add 1 combo:
+   - Combo #11: Biryani Combo (spans stores 12, 13, 14)
+   - Contains 6 products from all 3 stores
+
+================================================================================
+STEP 2: VERIFY CART VIA API (Optional)
+================================================================================
+
+API Endpoint: GET /api/cart
+Headers:
+    Authorization: Bearer {customer_token}
+
+You should see:
+- 3 regular items in "items" array
+- 1 combo in "custom_combos" array
+- Proper totals calculated
+
+================================================================================
+STEP 3: PLACE PRE-ORDER VIA POSTMAN
+================================================================================
+
+🔹 METHOD 1: Using Cart (RECOMMENDED - Easier)
+-----------------------------------------------
+The placeOrder API automatically reads from cart tables, so you don't need
+to specify product_variant_id and quantity!
+
+API Endpoint: POST /customer/place_order
+Headers:
+    Authorization: Bearer {customer_token}
+    Content-Type: application/json
+
+Body (JSON):
+{
+  "is_preorder": 1,
+  "order_type": "doorstep",
+  "payment_method": "COD",
+  "product_variant_id": "5,18,102",
+  "quantity": "1,1,1",
+  "total": 300,
+  "delivery_charge": 30,
+  "final_total": 330,
+  "delivery_time": "10:00 AM - 12:00 PM",
+  "address_id": 2,
+  "order_note": "Test preorder - 3 stores + combo",
+  "wallet_used": "false",
+  "wallet_balance": 0
+}
+
+
+NOTES:
+- is_preorder: 1 = Pre-order, 0 = Regular order
+- custom_combos: [] = Required for validation (even if empty, allows API to read from cart)
+- preorder_process_date is auto-calculated (next Friday 6:30 AM)
+- The API will automatically:
+  ✅ Read items from 'carts' table
+  ✅ Read combo from 'combo_custom_cart' and 'combo_custom_products' tables
+  ✅ Create order with is_preorder = 1
+  ✅ Save regular items to 'order_items' table
+  ✅ Save combo items to 'order_combo_items' table
+  ✅ Create entries in 'order_seller_status_tracking' table
+
+
+🔹 METHOD 2: Using Explicit Product IDs (Alternative)
+------------------------------------------------------
+If you want to place order WITHOUT using cart:
+
+API Endpoint: POST /api/orders/place
+Headers:
+    Authorization: Bearer {customer_token}
+    Content-Type: application/json
+
+Body (JSON):
+{
+  "is_preorder": 1,
+  "order_type": "doorstep",
+  "payment_method": "COD",
+  "product_variant_id": "5,18,102",
+  "quantity": "1,1,1",
+  "total": 300,
+  "delivery_charge": 30,
+  "final_total": 330,
+  "delivery_time": "10:00 AM - 12:00 PM",
+  "address_id": 2,
+  "order_note": "Test preorder - only regular items",
+  "wallet_used": "false",
+  "wallet_balance": 0
+}
+
+NOTES:
+- This method only works for REGULAR items (not combos!)
+- To include combos, you MUST use Method 1 (from cart)
+- product_variant_id: Comma-separated variant IDs (5, 18, 102)
+- quantity: Comma-separated quantities matching the variant IDs
+
+================================================================================
+STEP 4: VERIFY PRE-ORDER IN ADMIN PANEL
+================================================================================
+
+1. Go to: http://127.0.0.1:8000/preorders
+
+2. You should see the new pre-order with:
+   ✅ Status: "Preorder Pending" (active_status = 12)
+   ✅ is_preorder = 1
+   ✅ preorder_process_date = Next Friday 6:30 AM
+   ✅ Items from stores 12, 13, 14
+   ✅ Combo items visible
+
+3. View store-wise breakdown:
+   - Store 12 (Grocery & Kitchen): Shows items from store 12
+   - Store 13 (Vegetables & Fruits): Shows items from store 13
+   - Store 14 (Chicken & Meat): Shows items from store 14
+
+4. For Zenfoo-managed stores (like Store 12):
+   ✅ "Zenfoo Store" badge shown
+   ✅ No seller assignment UI (managed directly by Zenfoo)
+
+5. For seller-managed stores:
+   ✅ Seller assignment dropdown visible
+   ✅ Can assign sellers to orders
+   ✅ Assigned sellers shown with green badge
+
+================================================================================
+STEP 5: TEST SELLER ASSIGNMENT (If applicable)
+================================================================================
+
+For stores NOT managed by Zenfoo:
+
+1. Go to: Pre-Orders → Store Pre-Orders → Select Store
+2. View orders for that store
+3. Select orders and assign seller
+4. Verify:
+   ✅ OTP generated in order_seller_status_tracking table
+   ✅ Order appears with seller badge
+   ✅ Checkbox disabled (can't reassign)
+
+================================================================================
+STEP 6: TEST AUTOMATED PROCESSING (Friday)
+================================================================================
+
+The ProcessPreorders command runs automatically on Friday (preorder_process_date):
+
+1. Order status changes: "Preorder Pending" → "Received"
+2. Notifications sent to:
+   ✅ Customer: "Your Preorder is Being Prepared!"
+   ✅ Assigned Sellers: "You have a new preorder #X. Please check the app."
+   ✅ Admins: New order notification
+   ✅ Email sent to customer
+   ✅ SMS sent to customer
+
+================================================================================
+DATABASE TABLES INVOLVED
+================================================================================
+
+Regular Items:
+- carts → order_items
+
+Combo Items:
+- combo_custom_cart → order_combo_items
+- combo_custom_products → order_combo_items
+
+Pre-Order Tracking:
+- orders (is_preorder=1, preorder_process_date)
+- order_seller_status_tracking (seller assignments, OTP)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+❌ "The quantity field is required" error:
+   → Add "custom_combos": [] to your request body
+   → This tells the API to read from cart instead of requiring explicit product_variant_id
+
+❌ Cart is empty:
+   → Run: php add_to_cart.php
+
+❌ "Preorder feature is disabled":
+   → Enable in settings table: preorder_enabled = 1
+
+❌ "Preorders can only be placed from Saturday 1:00 AM to Friday 6:30 AM":
+   → Check preorder_cutoff_time in settings
+
+❌ Order not showing in store view:
+   → Check if items belong to that store_id
+   → For combos, check combo_products table for store_id
+
+❌ Seller not getting notification:
+   → Check order_seller_status_tracking has seller_id
+   → Check seller has FCM token in admin_tokens table
+
+================================================================================
+QUICK REFERENCE
+================================================================================
+
+Files:
+- add_to_cart.php                 → Populate cart script
+- PREORDER_TEST_GUIDE.txt         → This guide
+- app/Console/Commands/ProcessPreorders.php   → Cron job
+- app/Jobs/SendSellerOrderNotification.php    → Notification job
+- resources/js/views/PreOrders/StorePreOrders.vue   → Store view UI
+
+Commands:
+- php add_to_cart.php             → Add items to cart
+- php artisan preorders:process   → Manually process pre-orders
+
+API Endpoints:
+- GET /api/cart                   → View cart
+- POST /customer/place_order      → Place order
+- GET /api/preorders/store-orders → Get store orders (admin)
+
+================================================================================
+END OF GUIDE
+================================================================================
+
+
+/usr/bin/php /home/u675966105/domains/wheat-rook-708688.hostingersite.com/public_html/artisan schedule:run >> /dev/null 2>&1
+
+PHP
+
+
+Custom
+
+
+/usr/bin/php /home/u675966105/
+Command to run
+Command to run
+domains/wheat-rook-708688.hostingersite.com/public_html/artisan preorders:process >> /dev/null 2>&1
+
+Common options (s) (optional)
+minute
+minute
+:00 top of the hour (0)
+hour
+hour
+1
+day
+day
+Every Day (*)
+month
+month
+Every Month (*)
+weekDay
+weekDay
+Friday
+
+Save
+
+
+php artisan preorders:process
+
+
+php add_to_cart.php
+php artisan tinker --execute="DB::table('orders')->where('id', 308)->update(['preorder_process_date' => now()]);"
+php artisan preorders:process

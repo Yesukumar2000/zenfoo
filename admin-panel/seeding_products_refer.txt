@@ -1,0 +1,24 @@
+All done. Here's the summary of all files created:
+
+Seeders (20 products each):
+
+Command	Store	Type
+php artisan db:seed --class=Store12ProductSeeder	Store 12	Grocery & Kitchen
+php artisan db:seed --class=Store13ProductSeeder	Store 13	Vegetables & Fruits
+php artisan db:seed --class=Store14ProductSeeder	Store 14	Chicken & Eggs
+php artisan db:seed --class=Store18ProductSeeder	Store 18	Fresh Mutton
+php artisan db:seed --class=Store19ProductSeeder	Store 19	Fresh Fish & Seafood
+php artisan db:seed --class=Store20ProductSeeder	Store 20	Camel Meat
+Delete seeders:
+
+Command	Store
+php artisan db:seed --class=DeleteStore12ProductsSeeder	Store 12
+php artisan db:seed --class=DeleteStore13ProductsSeeder	Store 13
+php artisan db:seed --class=DeleteStore14ProductsSeeder	Store 14
+php artisan db:seed --class=DeleteStore18ProductsSeeder	Store 18
+php artisan db:seed --class=DeleteStore19ProductsSeeder	Store 19
+php artisan db:seed --class=DeleteStore20ProductsSeeder	Store 20
+
+
+php artisan db:seed --class=Store12ProductSeeder && php artisan db:seed --class=Store13ProductSeeder && php artisan db:seed --class=Store14ProductSeeder && php artisan db:seed --class=Store18ProductSeeder && php artisan db:seed --class=Store19ProductSeeder && php artisan db:seed --class=Store20ProductSeeder
+php artisan db:seed --class=DeleteStore12ProductsSeeder && php artisan db:seed --class=DeleteStore13ProductsSeeder && php artisan db:seed --class=DeleteStore14ProductsSeeder && php artisan db:seed --class=DeleteStore18ProductsSeeder && php artisan db:seed --class=DeleteStore19ProductsSeeder && php artisan db:seed --class=DeleteStore20ProductsSeeder

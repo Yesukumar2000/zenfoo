@@ -1,0 +1,710 @@
+// Bootstrap
+//@import '~bootstrap/scss/bootstrap';
+
+// Bootstrap Vue
+//@import '~bootstrap-vue/src/index.scss';
+
+// Sweet alert
+@import '~sweetalert2/src/sweetalert2.scss';
+
+// Fontawesome
+@import '~font-awesome/scss/font-awesome';
+
+@import '~datatables.net-dt/css/jquery.dataTables.css';
+
+@import "~toastr/toastr";
+
+@import 'dark-theme.scss';
+
+// Ensure toast notifications appear above Bootstrap modals (z-index: 1055)
+.v-toast {
+  z-index: 9999 !important;
+}
+
+
+
+/* Sidebar Divider */
+.sidebar-divider {
+  list-style: none;
+  margin: 1rem 0;
+  padding: 0;
+
+  hr {
+    margin: 0;
+    border: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Sidebar Items Font Weight */
+.sidebar-item {
+  .sidebar-link {
+    font-weight: 600; // Semibold
+
+    span {
+      font-weight: 600; // Semibold
+    }
+  }
+}
+
+.submenu-item {
+  position: relative;
+
+  a {
+    font-weight: 500; // Medium for submenu items
+    // padding-left: 1.5rem; // Make space for the dot
+    display: block;
+
+    &::before {
+      content: "•";
+      position: absolute;
+      left: -0.1rem;
+      font-size: 1.2em;
+      line-height: 1;
+    }
+  }
+}
+
+.sidebar-title {
+  font-weight: 600 !important; // Semibold for headings
+  font-size: 0.75rem !important; // Smaller font size for headings
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: red;
+}
+
+
+
+/* Top Navbar Styling */
+header .navbar {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: "50px !important";
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  }
+
+  // Reduce avatar size
+  .avatar-md22 {
+    width: 35px;
+    height: 35px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  // Reduce user menu text size
+  .user-name {
+    h6 {
+      font-size: 0.9rem;
+      margin-bottom: 0.1rem;
+    }
+
+    p {
+      font-size: 0.75rem;
+    }
+  }
+}
+
+// Dark theme support
+.theme-dark header .navbar {
+  background: #1a1d21;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* Modern Dashboard Styling */
+.page-heading {
+  margin-bottom: 2rem;
+
+  h3 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1a1d21;
+    margin: 0;
+  }
+}
+
+// Modern stat cards
+.stats-card {
+  border-radius: 1rem !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  // Modern icon styling
+  .stats-icon-big {
+    width: 64px;
+    height: 64px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+
+    i {
+      font-size: 28px;
+    }
+
+    &.blue {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #fff;
+    }
+
+    &.orange {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: #fff;
+    }
+
+    &.sky {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: #fff;
+    }
+
+    &.lightgreen {
+      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      color: #fff;
+    }
+
+    &.purple {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+      color: #667eea;
+    }
+  }
+
+  h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem !important;
+    color: #1a1d21;
+  }
+
+  h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d !important;
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+// Chart cards
+.chart-card {
+  border-radius: 1rem !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+
+  .card-header {
+    background: transparent !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 1.5rem !important;
+
+    h4 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin: 0;
+      color: #1a1d21;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: #6c757d;
+      margin: 0.25rem 0 0 0;
+    }
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+}
+
+// Product count cards
+.products_sold {
+  .card {
+    border-radius: 1rem !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    .card-header {
+      background: transparent !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 1rem !important;
+
+      h6 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin: 0;
+        color: #1a1d21;
+      }
+    }
+
+    .card-body {
+      padding: 1.5rem !important;
+
+      h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #1a1d21;
+        margin-bottom: 1rem;
+      }
+
+      .btn_product_count {
+        border-radius: 0.5rem;
+        font-weight: 600;
+        font-size: 0.875rem;
+        padding: 0.625rem 1rem;
+      }
+    }
+  }
+}
+
+// Order status cards
+.stats-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.payment_pending {
+    background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+  }
+
+  &.received {
+    background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+  }
+
+  &.processed {
+    background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
+  }
+
+  &.shipped {
+    background: linear-gradient(135deg, #fd79a8 0%, #e84393 100%);
+  }
+
+  &.outForDelivery {
+    background: linear-gradient(135deg, #fab1a0 0%, #e17055 100%);
+  }
+
+  &.delivered {
+    background: linear-gradient(135deg, #55efc4 0%, #00b894 100%);
+  }
+
+  &.cancelled {
+    background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+  }
+
+  &.returned {
+    background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+  }
+
+  img {
+    width: 28px;
+    height: 28px;
+    filter: brightness(0) invert(1);
+  }
+}
+
+// Order status cards - Modern redesign
+.order-status-card {
+  border-radius: 1rem !important;
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  transition: all 0.3s ease !important;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12) !important;
+  }
+
+  .card-body {
+    padding: 1.5rem !important;
+  }
+
+  .stats-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+    img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  .status-count {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1a1d21;
+    margin: 0;
+  }
+
+  .status-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    margin: 0;
+  }
+}
+
+// Section headings
+.fw-bold, .section-heading {
+  font-weight: 700 !important;
+  font-size: 1.25rem;
+  color: #1a1d21;
+  margin-bottom: 0;
+  position: relative;
+  padding-bottom: 0.75rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border-radius: 2px;
+  }
+}
+
+// Spacing improvements
+.mt-4 {
+  margin-top: 2rem !important;
+}
+
+// Card hover effects for all dashboard cards
+.page-content .card {
+  transition: all 0.3s ease;
+}
+
+// Modern Table Styling
+.table-responsive {
+  border-radius: 0.5rem;
+
+  .table {
+    margin-bottom: 0;
+
+    thead {
+      th {
+        background: #f8f9fa;
+        border-bottom: 2px solid #e9ecef;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        padding: 1rem 0.75rem;
+      }
+    }
+
+    tbody {
+      tr {
+        transition: all 0.2s ease;
+
+        &:hover {
+          background-color: #f8f9fa;
+        }
+
+        td {
+          padding: 1rem 0.75rem;
+          vertical-align: middle;
+          border-bottom: 1px solid #f0f0f0;
+        }
+      }
+    }
+  }
+}
+
+// Dark theme table styles
+.theme-dark {
+  .table-responsive .table,
+  .table {
+    thead {
+      th {
+        background: #2a2e33;
+        border-bottom: 2px solid #3d4147;
+        color: #adb5bd;
+      }
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: #2a2e33 !important;
+        }
+
+        td {
+          border-bottom: 1px solid #3d4147;
+        }
+      }
+    }
+
+    &.table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(255, 255, 255, 0.03);
+
+      &:hover {
+        background-color: #2a2e33 !important;
+      }
+    }
+  }
+
+  // Bootstrap Vue table dark mode
+  .b-table-sticky-header,
+  .table-responsive {
+    .table {
+      &.b-table {
+        > tbody > tr {
+          &:hover {
+            background-color: #2a2e33 !important;
+          }
+
+          &.table-active,
+          &.b-table-row-selected {
+            background-color: #3d4147 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Modern Nav Pills Styling
+.nav-pills {
+  gap: 0.5rem;
+  background: #f1f3f4;
+  padding: 0.5rem;
+  border-radius: 0.75rem;
+  display: inline-flex;
+
+  .nav-item .nav-link {
+    background: transparent;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    color: #5a6169;
+    transition: all 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      background: rgba(154, 196, 68, 0.15);
+      color: #7a9c36;
+    }
+
+    &.active {
+      background: #9AC444;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(154, 196, 68, 0.4);
+    }
+  }
+}
+
+// Dark theme nav pills
+.theme-dark .nav-pills {
+  background: #2a2e33;
+
+  .nav-item .nav-link {
+    color: #adb5bd;
+
+    &:hover {
+      background: rgba(154, 196, 68, 0.2);
+      color: #9AC444;
+    }
+
+    &.active {
+      background: #9AC444;
+      color: #fff;
+    }
+  }
+}
+
+// Modern Nav Tabs Styling (Bootstrap Vue b-tabs)
+.nav-tabs {
+  gap: 0.5rem;
+  background: #f1f3f4;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  border: none;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-bottom: 1rem;
+
+  .nav-item {
+    margin-bottom: 0;
+
+    .nav-link {
+      background: transparent;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: #5a6169;
+      transition: all 0.2s ease;
+      cursor: pointer;
+
+      &:hover {
+        background: rgba(154, 196, 68, 0.15);
+        color: #7a9c36;
+        border: none;
+      }
+
+      &.active {
+        background: #9AC444;
+        color: #fff;
+        border: none;
+        box-shadow: 0 2px 8px rgba(154, 196, 68, 0.4);
+      }
+    }
+  }
+}
+
+// Dark theme nav tabs
+.theme-dark .nav-tabs {
+  background: #2a2e33;
+
+  .nav-item .nav-link {
+    color: #adb5bd;
+
+    &:hover {
+      background: rgba(154, 196, 68, 0.2);
+      color: #9AC444;
+    }
+
+    &.active {
+      background: #9AC444;
+      color: #fff;
+    }
+  }
+}
+
+// Modern badges in cards
+.badge {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+
+  &.bg-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  }
+
+  &.bg-success {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%) !important;
+  }
+}
+
+// Pagination styling
+.pagination {
+  .page-item {
+    margin: 0 0.125rem;
+
+    .page-link {
+      border-radius: 0.5rem;
+      border: 1px solid #e9ecef;
+      color: #667eea;
+      padding: 0.5rem 0.75rem;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: #667eea;
+        color: #fff;
+        border-color: #667eea;
+      }
+    }
+
+    &.active .page-link {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: #667eea;
+      color: #fff;
+    }
+  }
+}
+
+// Form controls
+.form-select, .form-control {
+  border-radius: 0.5rem;
+  border: 1px solid #e9ecef;
+  padding: 0.5rem 0.75rem;
+  transition: all 0.2s ease;
+
+  &:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+  }
+}
+
+// Responsive improvements
+@media (max-width: 768px) {
+  .stats-card {
+    h3 {
+      font-size: 1.5rem;
+    }
+
+    .stats-icon-big {
+      width: 52px;
+      height: 52px;
+
+      i {
+        font-size: 24px;
+      }
+    }
+  }
+
+  .page-heading h3 {
+    font-size: 1.5rem;
+  }
+
+  .order-status-card {
+    .status-count {
+      font-size: 1.5rem;
+    }
+  }
+}
+

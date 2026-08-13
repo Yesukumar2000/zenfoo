@@ -1,0 +1,32 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "89C47N4UTZ.com.zenfoo.customer",
+        "paths": [
+          "*"
+        ]
+      },
+      {
+        "appID": "89C47N4UTZ.com.zenfoo.partner",
+        "paths": [
+          "*"
+        ]
+      },
+      {
+        "appID": "89C47N4UTZ.com.zenfoo.vendor",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "89C47N4UTZ.com.zenfoo.customer",
+      "89C47N4UTZ.com.zenfoo.partner",
+      "89C47N4UTZ.com.zenfoo.vendor"
+    ]
+  }
+}

@@ -29,6 +29,12 @@ desktop.ini
 key.properties
 **/android/keystore/
 
+# ─── Firebase service-account credentials — NEVER commit ──────────────
+# Loaded at runtime via base_path('config/firebase.json').
+# See admin-panel/config/firebase.json.example for the expected shape.
+/admin-panel/config/firebase.json
+/admin-panel/config/test.json
+
 # ─── Build artifacts ──────────────────────────────────────────────────
 *.ipa
 *.apk
